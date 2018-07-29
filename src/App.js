@@ -112,7 +112,8 @@ class ListaChamados extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`chamados/getOpeneds`)
+    // axios.get(`chamados/getOpeneds`)
+    axios.get(`http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc`)
       .then(res => {
         console.log("axios.get(`chamados/getOpeneds`) retornou com sucesso");
         console.log(res)
@@ -138,26 +139,29 @@ class ListaChamados extends React.Component {
 
   render() {
     return (
-      this.state.isLoading === true || this.state.isInError === true  
-      ?
-      this.state.isLoading ? <LoadingGif /> : <ErrorLoadingOrders />
-      :
       <div>
-        <SimpleModal 
-            showModal={this.state.showModal} 
-            osBeingClosed={this.state.osBeingClosed} />
-        <ul className="ul-chamados">
-          {
-            this.state.chamados.length === 0 ?
-              <div style={{height: 60, background: "#cccccc80", textAlign: "center", fontSize: 20, paddingTop: 10}}>Não há chamados abertos</div>
-            :
-              this.state.chamados.map(chamado =>
-                <ItemChamado chamado={chamado} 
-                tryToCloseOs = {this.tryToCloseOs}/>
-              )
-          }
-        </ul>
+        {this.state.chamados} 
       </div>
+      // this.state.isLoading === true || this.state.isInError === true  
+      // ?
+      // this.state.isLoading ? <LoadingGif /> : <ErrorLoadingOrders />
+      // :
+      // <div>
+      //   <SimpleModal 
+      //       showModal={this.state.showModal} 
+      //       osBeingClosed={this.state.osBeingClosed} />
+      //   <ul className="ul-chamados">
+      //     {
+      //       this.state.chamados.length === 0 ?
+      //         <div style={{height: 60, background: "#cccccc80", textAlign: "center", fontSize: 20, paddingTop: 10}}>Não há chamados abertos</div>
+      //       :
+      //         this.state.chamados.map(chamado =>
+      //           <ItemChamado chamado={chamado} 
+      //           tryToCloseOs = {this.tryToCloseOs}/>
+      //         )
+      //     }
+      //   </ul>
+      // </div>
     );
   }
 }
