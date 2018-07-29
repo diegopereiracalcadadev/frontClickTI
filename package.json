@@ -2,19 +2,22 @@
   "name": "reactclick",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000/",
   "dependencies": {
+    "axios": "^0.18.0",
     "dns": "^0.2.2",
+    "jquery": "^3.3.1",
     "module": "^1.2.5",
+    "moment": "^2.22.2",
     "mongodb": "^3.1.0-beta4",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-materialize": "^2.3.3",
+    "react-moment": "^0.7.9",
     "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
 }
