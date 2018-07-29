@@ -1,0 +1,312 @@
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+/* -------------COMMONS ----------------*/
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+
+.dflex{
+  display: flex
+}
+
+.flex-vcenter{
+  align-items: center
+}
+
+.flex-hcenter{
+  justify-content: center
+}
+
+.bg-vermelho{
+  background: #da2020
+}
+
+.bg-cinza{
+  background: #777676
+}
+
+.btn-desativado{
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/*----------------FIM COMMONS -----------------*/
+
+.menu-container-logo {
+  height: 200px;
+  width: 100%;
+  text-align: center;
+  padding-top: 30px;
+}
+
+.menu-container-logo img {
+  height: 120px;
+}
+
+nav.topbar {
+  background: #464646;
+}
+
+/* FIM MENU */
+
+header.header-componente {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  background: black;
+  color: white;
+  text-align: center;
+}
+
+header.header-componente span {
+  padding-top: 12px;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.header-componente i.btn-toggle-menu {
+  float: left;
+  background: #2d2d2d;
+  height: 50px;
+  width: 50px;
+  box-sizing: border-box !important;
+  padding-top: 12px;
+
+}
+
+.header-componente i.btn-action {
+  float: right;
+  visibility: hidden;
+  height: 50px;
+  width: 50px;
+}
+
+section.body-componente {
+  position: absolute;
+  top: 64px;
+  bottom: 0;
+  width: 100%;
+}
+
+.ul-chamados {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.ul-chamados li {
+  position: relative;
+  height: 100px;
+  padding-left: 20px;
+  background: #e8e8e8;
+  border-bottom: 1px solid #676767;
+  padding-top: 5px;
+}
+
+.ul-chamados .li-chamado-infs {
+  float: left;
+}
+
+.ul-chamados .li-chamado-actions {
+  float: right;
+}
+
+.ul-chamados .li-chamado-actions a {
+  background: #676262 !important;
+  margin: 20px 10px 0 0;
+}
+
+.clearfix:after {
+  content: ".";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+.infs-chamado {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 100px;
+  padding-left: 9px;
+  padding-top: 3px;
+}
+
+.infs-chamado .nome-cliente{
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0px;
+}
+
+.infs-chamado .desc-chamado{
+  margin: 0px;
+}
+
+
+.infs-abertura p{
+  font-size: 9px;
+  text-align: center;
+  margin: 0;
+}
+
+.infs-abertura{
+  margin-bottom: 10px; 
+}
+
+.status-chamado{
+  position: absolute;
+  right: 0;
+  width: 100px;
+  top: 0;
+  bottom: 0;
+  padding-top: 3px;
+}
+
+.os-number{
+  margin: 0;
+  font-size: 10px;
+}
+
+.btn-fechar-chamado,
+.btn-fechar-chamado:hover,
+.btn-fechar-chamado:active,
+.btn-fechar-chamado:focus{
+  background-color: #113356;
+}
+
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+/* -------------MODAL DE FECHAMENTO ----------------*/
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+.simple-modal-dimmed-bg { 
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.6);
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.simple-modal-dialog{
+  width: 70%;
+  height: 90%;
+  background: white;
+}
+
+/* -------------HEADER ----------------*/
+.simple-modal-header{
+  position: relative;
+  background: #464646;
+  height: 50px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.simple-modal-header-infs{
+  height: 100%;
+  width: calc(100% - 50px);
+  text-align: center;
+  padding: 6px 10px;
+}
+
+.simple-modal-header-infs p{
+  margin: 0;
+}
+
+.simple-modal-header .btn-area-close-modal{
+  width: 50px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items:  center;
+  cursor: pointer;
+}
+.simple-modal-header .btn-area-close-modal:hover {
+  background: rgb(119, 119, 119);
+}  
+
+.simple-modal-header .btn-area-close-modal button{
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: 700;
+  padding-bottom: 7px;
+}
+
+.topbar .btn-refresh{
+  height: 100%;
+  padding: 0 20px;
+} 
+
+/* -------------BODY ----------------*/
+.simple-modal-body{
+  height: calc(100% - 100px);
+  padding: 10px 20px;
+}
+
+/* -------------FOOTER ----------------*/
+.simple-modal-footer{
+  height: 50px;
+}
+
+.simple-modal-footer button,
+.simple-modal-footer button:active,
+.simple-modal-footer button:hover,
+.simple-modal-footer button:focus{
+  width: 100%;
+  height: 100%;
+  background: #113356;
+}
+
+.opening-user-container {
+  height: 100%;
+} 
+
+.opening-user-container > textarea {
+  height: calc(100% - 162px);
+}
+
+/* ---------- FIM MODAL DE FECHAMENTO ----------------*/
+
+
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+/* -------------LOADING MSG ----------------*/
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+
+.container-loading {
+  text-align: center;
+  margin-top: 120px;
+}
+
+.container-loading img.loading-img {
+  width: 40%;
+  height: 140px;
+  position: relative;
+  top: -20px;
+  z-index: -10;
+}
+
+.container-loading > p {
+  margin-bottom: 0;
+  /* z-index: 200000; */
+  color: #949494;
+  font-size: 20px;
+  z-index: 99999;
+}
+
+/* ---------- FIM LOADING MSG ----------------*/
