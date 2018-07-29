@@ -140,7 +140,7 @@ class ListaChamados extends React.Component {
   render() {
     return (
       <div>
-        {this.state.chamados} 
+        this.state.chamados 
       </div>
       // this.state.isLoading === true || this.state.isInError === true  
       // ?
