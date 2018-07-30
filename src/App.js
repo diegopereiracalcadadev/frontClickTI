@@ -6,7 +6,6 @@ import logoimg from "./imgs/logo.jpg";
 import loadingImgSrc from "./imgs/loading-plasma.gif";
 import axios from 'axios';
 import Moment from 'react-moment';
-import jsonpP from 'jsonp-p';
  
 
 class Header extends React.Component {
