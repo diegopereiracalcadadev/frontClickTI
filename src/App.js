@@ -6,7 +6,8 @@ import logoimg from "./imgs/logo.jpg";
 import loadingImgSrc from "./imgs/loading-plasma.gif";
 import axios from 'axios';
 import Moment from 'react-moment';
-
+import jsonpP from 'jsonp-p';
+ 
 
 class Header extends React.Component {
   render() {
@@ -113,19 +114,113 @@ class ListaChamados extends React.Component {
 
   componentDidMount() {
     // axios.get(`chamados/getOpeneds`)
-    axios.get(`http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc`)
-      .then(res => {
-        console.log("axios.get(`chamados/getOpeneds`) retornou com sucesso");
-        console.log(res)
-        if(res.data.length === 0){
-          this.setState({ chamados : res.data, isLoading : false });
-        } else {
-          this.setState({ chamados : res.data, isLoading : false });
-        }
-      })
-      .catch((error) => {
-        this.setState({isLoading : false, isInError : true});
-      });
+    // axios.get(`http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc`)
+    //   .then(res => {
+    //     console.log("axios.get(`chamados/getOpeneds`) retornou com sucesso");
+    //     console.log(res)
+    //     if(res.data.length === 0){
+    //       this.setState({ chamados : res.data, isLoading : false });
+    //     } else {
+    //       this.setState({ chamados : res.data, isLoading : false });
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     this.setState({isLoading : false, isInError : true});
+    //   });
+      
+    // const jsonp = require('jsonp');
+
+    // jsonp('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc', null, (err, data) => {
+    //   if (err) {
+    //     console.error(err.message);
+    //     this.setState({isLoading : false, isInError : true});
+    //   } else {
+    //     console.log(data);
+    //     console.log("axios.get(`chamados/getOpeneds`) retornou com sucesso");
+    //     if(data.length === 0){
+    //       this.setState({ chamados : data, isLoading : false });
+    //     } else {
+    //       this.setState({ chamados : data, isLoading : false });
+    //     }
+    //   }
+    // });
+
+    // const axiospro = require('axios');
+    // axiospro.jsonp('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc')
+    //     .then(function (response) {
+    //       console.log("response");
+    //       console.log(response);
+    //     })
+    //     .catch(function (error) {
+    //       console.log("error");
+    //       console.log(error);
+    //     });
+
+
+    // jsonpP("http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc", 
+    //     null, 
+    //     response => {
+    //       console.log("response");
+    //       console.log(response);
+    //     }
+    // ).promise;
+    // .then()
+    // .catch(error => {
+    //   console.log("error");
+    //   console.log(error);});
+          // axios.get('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc', {
+          //   timeout: 5000,
+          // }).then(function (response) {
+          //   console.log("response");
+          //   console.log(response);
+          // })
+          // .catch(function (error) {
+          //   console.log("error");
+          //   console.log(error);
+          // });
+    // const JSONP = require('browser-jsonp');
+    // JSONP({
+    //   url: 'http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc',
+    //   data: { foo: 'bar' },
+    //   success: function(data) { console.log(data); }
+    // });
+    
+    // const fetchJsonp = require('fetch-jsonp');
+    // fetchJsonp('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc', {timeout: 10000})
+    //     .then(function(response) {
+    //       return response.json()
+    //     }).then(function(json) {
+    //       console.log('parsed json', json)
+    //     }).catch(function(ex) {
+    //       console.log('parsing failed', ex)
+    //     });
+
+
+    console.log("tentativa 2153");
+    var myHeaders = new Headers({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Origin': '*',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    var myInit = { method: 'GET',
+                  headers: myHeaders,
+                  mode: 'cors',
+                  cache: 'default' };
+
+    var myRequest = new Request('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc', myInit);
+
+    fetch(myRequest)
+    .then(function(response) {
+      return response.json();
+    }).then(function(json) {
+      console.log('parsed json', json)
+    }).catch(function(ex) {
+      console.log('parsing failed', ex)
+    });
+    
   }
 
   tryToCloseOs(chamado){
@@ -140,7 +235,7 @@ class ListaChamados extends React.Component {
   render() {
     return (
       <div>
-        this.state.chamados 
+        {this.state.chamados} 
       </div>
       // this.state.isLoading === true || this.state.isInError === true  
       // ?
