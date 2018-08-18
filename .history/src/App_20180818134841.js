@@ -8,7 +8,7 @@ import axios from 'axios';
 import Moment from 'react-moment';
  
 var Modulo = {
-  OPENOS : { key : "openos",title : "Abrir Chamado"},
+  OPENOS : { key : "openos",title : "Abertura de Chamado"},
   CLOSEOS : { key : "closeos",title : "Fechar Chamados"}
 };
 
@@ -79,10 +79,10 @@ class Header extends React.Component {
             <img className="logo-img" src={logoimg} alt="Logo ClickTI" />
           </div>
           <li>
-            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.OPENOS)} className="waves-effect" href="#!">{Modulo.OPENOS.title}</a>
+            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.OPENOS)} className="waves-effect" href="#!">Abrir Chamado (Em Breve)</a>
           </li>
           <li>
-            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.CLOSEOS)} className="waves-effect" href="#!">{Modulo.CLOSEOS.title}</a>
+            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.CLOSEOS)} className="waves-effect" href="#!">Chamados Abertos</a>
           </li>
         </ul>
       </nav>

@@ -8,7 +8,7 @@ import axios from 'axios';
 import Moment from 'react-moment';
  
 var Modulo = {
-  OPENOS : { key : "openos",title : "Abrir Chamado"},
+  OPENOS : { key : "openos",title : "Abertura de Chamado"},
   CLOSEOS : { key : "closeos",title : "Fechar Chamados"}
 };
 

@@ -8,7 +8,7 @@ import axios from 'axios';
 import Moment from 'react-moment';
  
 var Modulo = {
-  OPENOS : { key : "openos",title : "Abrir Chamado"},
+  OPENOS : { key : "openos",title : "Abertura de Chamado"},
   CLOSEOS : { key : "closeos",title : "Fechar Chamados"}
 };
 
@@ -27,7 +27,8 @@ class App extends React.Component {
   changeAppActiveModule(nextModule){
     console.log("[APP] - changeAppActiveModule inivocado com parm:", nextModule);
     this.setState({activeModule : nextModule});
-    console.log("[APP] - State após alteração de state do changeAppActiveModule :", this.state);
+    console.log("[APP] - State após alteração de state do changeAppActiveModule :");
+    console.log(this.state);
     // chama funcao filha
 
   }
@@ -39,7 +40,7 @@ class App extends React.Component {
             USING PARENT FUNCTION - ETAPA 1
         */}
         <Header activeModule={this.state.activeModule} changeAppActiveModule = {this.changeAppActiveModule} />
-        <Body activeModule={this.state.activeModule} />
+        <Body />
         <Footer />
       </div>
     );
@@ -79,10 +80,10 @@ class Header extends React.Component {
             <img className="logo-img" src={logoimg} alt="Logo ClickTI" />
           </div>
           <li>
-            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.OPENOS)} className="waves-effect" href="#!">{Modulo.OPENOS.title}</a>
+            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.OPENOS)} className="waves-effect" href="#!">Abrir Chamado (Em Breve)</a>
           </li>
           <li>
-            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.CLOSEOS)} className="waves-effect" href="#!">{Modulo.CLOSEOS.title}</a>
+            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.CLOSEOS)} className="waves-effect" href="#!">Chamados Abertos</a>
           </li>
         </ul>
       </nav>
@@ -90,28 +91,62 @@ class Header extends React.Component {
   }
 }
 
-class Body extends React.Component {
-  render() {
-    console.log("Renderizando body");
-    console.log(this.props.activeModule);
-    
-    return (
-      <section className="body-componente">
-        {this.props.activeModule == Modulo.OPENOS 
-        ?
-        <div>abertura porra</div>
-        :
-        <ListaChamados />} 
-      </section>
-    )
-  }
-}
+class ItemChamado extends React.Component {
+  state = {
+    response: '',
+    show: true
+  };
 
-class Footer extends React.Component {
+  constructor(props) {
+    console.log("ItemChamado Constuctor invoked");
+    super(props);
+    
+    this.state._id = props.chamado._id;
+    this.state.osNumber = props.chamado.osNumber;
+    this.state.status = props.chamado.status;
+    this.state.clientId = props.chamado.clientId;
+    this.state.clientName = props.chamado.clientName;
+    this.state.openingUser = props.chamado.openingUser;
+    this.state.openingDate = props.chamado.openingDate;
+    this.state.description = props.chamado.description;
+    this.state.comments = props.chamado.comments;
+    this.state.mailTo = props.chamado.mailTo;
+    this.state.closingDate = props.chamado.closingDate;
+    this.state.solution = props.chamado.solution;
+
+    this.handleOnClick = this.handleOnClick.bind(this);
+  }
+
+  handleOnClick = ()=>{
+    console.log("ItemChamado - handleOnClick invoked");
+    console.log(this.state);
+    this.props.tryToCloseOs(this.state);
+  }
+
   render() {
     return (
-      <footer className="footer-component">
-      </footer>
+      this.state.show ?
+        <li className="li-chamado">
+          <div className="infs-chamado">
+            <input type="hidden" name="clientId" value={this.state.clientId} />
+            <p className="os-number">OS-{this.state.osNumber}</p>
+            <p className="nome-cliente">{this.state.clientName}</p>
+            <p className="desc-chamado">{this.state.description}</p>
+          </div>
+          
+          <div className="status-chamado">
+            <div className="infs-abertura" style={{marginBottom: 10}}>
+              <p>Aberto em</p> 
+              <p className="dt-abertura"><Moment locale="pt-br" format="DD/MM/YYYY">{this.state.openingDate}</Moment></p>
+            </div>
+            <div style={{marginLeft: 8}}>
+              <button 
+                onClick={this.handleOnClick}
+                className="waves-effect waves-light btn btn-fechar-chamado">Fechar</button>
+            </div>
+          </div>
+        </li>
+        : null
     );
   }
 }
@@ -281,66 +316,6 @@ class ListaChamados extends React.Component {
   }
 }
 
-class ItemChamado extends React.Component {
-  state = {
-    response: '',
-    show: true
-  };
-
-  constructor(props) {
-    console.log("ItemChamado Constuctor invoked");
-    super(props);
-    
-    this.state._id = props.chamado._id;
-    this.state.osNumber = props.chamado.osNumber;
-    this.state.status = props.chamado.status;
-    this.state.clientId = props.chamado.clientId;
-    this.state.clientName = props.chamado.clientName;
-    this.state.openingUser = props.chamado.openingUser;
-    this.state.openingDate = props.chamado.openingDate;
-    this.state.description = props.chamado.description;
-    this.state.comments = props.chamado.comments;
-    this.state.mailTo = props.chamado.mailTo;
-    this.state.closingDate = props.chamado.closingDate;
-    this.state.solution = props.chamado.solution;
-
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
-
-  handleOnClick = ()=>{
-    console.log("ItemChamado - handleOnClick invoked");
-    console.log(this.state);
-    this.props.tryToCloseOs(this.state);
-  }
-
-  render() {
-    return (
-      this.state.show ?
-        <li className="li-chamado">
-          <div className="infs-chamado">
-            <input type="hidden" name="clientId" value={this.state.clientId} />
-            <p className="os-number">OS-{this.state.osNumber}</p>
-            <p className="nome-cliente">{this.state.clientName}</p>
-            <p className="desc-chamado">{this.state.description}</p>
-          </div>
-          
-          <div className="status-chamado">
-            <div className="infs-abertura" style={{marginBottom: 10}}>
-              <p>Aberto em</p> 
-              <p className="dt-abertura"><Moment locale="pt-br" format="DD/MM/YYYY">{this.state.openingDate}</Moment></p>
-            </div>
-            <div style={{marginLeft: 8}}>
-              <button 
-                onClick={this.handleOnClick}
-                className="waves-effect waves-light btn btn-fechar-chamado">Fechar</button>
-            </div>
-          </div>
-        </li>
-        : null
-    );
-  }
-}
-
 class LoadingGif extends React.Component {
   render(){
     return (
@@ -348,6 +323,36 @@ class LoadingGif extends React.Component {
         <p>Aguarde...</p>
         <img className="loading-img" src={loadingImgSrc} alt="Carregando..." />
       </div>
+    )
+  }
+}
+
+class ErrorLoadingOrders extends React.Component {
+  errorStyle = {
+    textAlign: "center",
+    marginTop: 60,
+    color: "white",
+    fontWeight: 700,
+    fontSize: 20,
+    background: "#ff0000a8",
+    padding: "20px 0"
+  }
+  render(){
+    return (
+      <div style={this.errorStyle}>
+        <p>Erro ao listar os chamados...</p>
+        <p>Tente novamente em instantes</p>
+      </div>
+    )
+  }
+}
+
+class Body extends React.Component {
+  render() {
+    return (
+      <section className="body-componente">
+        <ListaChamados />
+      </section>
     )
   }
 }
@@ -462,25 +467,16 @@ class SimpleModal extends React.Component{
   }
 }
 
-class ErrorLoadingOrders extends React.Component {
-  errorStyle = {
-    textAlign: "center",
-    marginTop: 60,
-    color: "white",
-    fontWeight: 700,
-    fontSize: 20,
-    background: "#ff0000a8",
-    padding: "20px 0"
-  }
-  render(){
+class Footer extends React.Component {
+  render() {
     return (
-      <div style={this.errorStyle}>
-        <p>Erro ao listar os chamados...</p>
-        <p>Tente novamente em instantes</p>
-      </div>
-    )
+      <footer className="footer-component">
+      </footer>
+    );
   }
 }
+
+
 
 export default App;
 

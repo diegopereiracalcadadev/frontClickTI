@@ -8,7 +8,7 @@ import axios from 'axios';
 import Moment from 'react-moment';
  
 var Modulo = {
-  OPENOS : { key : "openos",title : "Abrir Chamado"},
+  OPENOS : { key : "openos",title : "Abertura de Chamado"},
   CLOSEOS : { key : "closeos",title : "Fechar Chamados"}
 };
 
@@ -27,7 +27,8 @@ class App extends React.Component {
   changeAppActiveModule(nextModule){
     console.log("[APP] - changeAppActiveModule inivocado com parm:", nextModule);
     this.setState({activeModule : nextModule});
-    console.log("[APP] - State após alteração de state do changeAppActiveModule :", this.state);
+    console.log("[APP] - State após alteração de state do changeAppActiveModule :");
+    console.log(this.state);
     // chama funcao filha
 
   }
@@ -39,7 +40,7 @@ class App extends React.Component {
             USING PARENT FUNCTION - ETAPA 1
         */}
         <Header activeModule={this.state.activeModule} changeAppActiveModule = {this.changeAppActiveModule} />
-        <Body activeModule={this.state.activeModule} />
+        <Body />
         <Footer />
       </div>
     );
@@ -79,10 +80,10 @@ class Header extends React.Component {
             <img className="logo-img" src={logoimg} alt="Logo ClickTI" />
           </div>
           <li>
-            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.OPENOS)} className="waves-effect" href="#!">{Modulo.OPENOS.title}</a>
+            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.OPENOS)} className="waves-effect" href="#!">Abrir Chamado (Em Breve)</a>
           </li>
           <li>
-            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.CLOSEOS)} className="waves-effect" href="#!">{Modulo.CLOSEOS.title}</a>
+            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.CLOSEOS)} className="waves-effect" href="#!">Chamados Abertos</a>
           </li>
         </ul>
       </nav>
@@ -92,16 +93,9 @@ class Header extends React.Component {
 
 class Body extends React.Component {
   render() {
-    console.log("Renderizando body");
-    console.log(this.props.activeModule);
-    
     return (
       <section className="body-componente">
-        {this.props.activeModule == Modulo.OPENOS 
-        ?
-        <div>abertura porra</div>
-        :
-        <ListaChamados />} 
+        <ListaChamados />
       </section>
     )
   }
