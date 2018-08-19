@@ -13,9 +13,11 @@ var Modulo = {
   CLOSEOS : { key : "closeos",title : "Fechar Chamados"}
 };
 
+var remoteHostDomain = "http://nodejs-mongo-persistent-backendclick.193b.starter-ca-central-1.openshiftapps.com";
+
 class App extends React.Component {
   state = {
-    activeModule : Modulo.OPENOS
+    activeModule : Modulo.CLOSEOS
   }
 
   
@@ -137,7 +139,7 @@ class ModuloAbrirChamado extends React.Component{
                   cache: 'default',
                   body : corpo };
 
-    var myRequest = new Request('http://nodejs-mongo-persistent-backendclickti.193b.starter-ca-central-1.openshiftapps.com/open', myInit);
+    var myRequest = new Request(remoteHostDomain + '/open', myInit);
 
     fetch(myRequest)
         .then(function(response) {
@@ -205,6 +207,7 @@ class ModuloFecharChamados extends React.Component {
   constructor(props) {
     super(props);
     this.tryToCloseOs = this.tryToCloseOs.bind(this);
+    updateState = updateState.bind(this);
   }
 
   componentDidMount() {
@@ -304,19 +307,25 @@ class ModuloFecharChamados extends React.Component {
                   headers: myHeaders,
                   mode: 'cors',
                   cache: 'default' };
+                  
 
-    var myRequest = new Request('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/getAll', myInit);
+    var myRequest = new Request(remoteHostDomain + '/getAll', myInit);
+    console.log("Disparando requisição para " + remoteHostDomain + "/getAll");
+    
 
     fetch(myRequest)
     .then(function(response) {
       return response.json();
     }).then(function(json) {
-      console.log('parsed json', json)
+      console.log('parsed json', json);
+      updateState({chamados : json});
     }).catch(function(ex) {
       console.log('parsing failed', ex)
     });
     
   }
+
+  
 
   tryToCloseOs(chamado){
     console.log("tryToCloseOs invoked");
@@ -329,33 +338,39 @@ class ModuloFecharChamados extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.state.chamados} 
-      </div>
-      // this.state.isLoading === true || this.state.isInError === true  
-      // ?
-      // this.state.isLoading ? <LoadingGif /> : <ErrorLoadingOrders />
-      // :
       // <div>
-      //   <SimpleModal 
-      //       showModal={this.state.showModal} 
-      //       osBeingClosed={this.state.osBeingClosed} />
-      //   <ul className="ul-chamados">
-      //     {
-      //       this.state.chamados.length === 0 ?
-      //         <div style={{height: 60, background: "#cccccc80", textAlign: "center", fontSize: 20, paddingTop: 10}}>Não há chamados abertos</div>
-      //       :
-      //         this.state.chamados.map(chamado =>
-      //           <ItemChamado chamado={chamado} 
-      //           tryToCloseOs = {this.tryToCloseOs}/>
-      //         )
-      //     }
-      //   </ul>
+      //   {this.state.chamados} 
       // </div>
+      this.state.isLoading === true || this.state.isInError === true  
+      ?
+      this.state.isLoading ? <LoadingGif /> : <ErrorLoadingOrders />
+      :
+      <div>
+        <SimpleModal 
+            showModal={this.state.showModal} 
+            osBeingClosed={this.state.osBeingClosed} />
+        <ul className="ul-chamados">
+          {
+            this.state.chamados.length === 0 ?
+              <div style={{height: 60, background: "#cccccc80", textAlign: "center", fontSize: 20, paddingTop: 10}}>Não há chamados abertos</div>
+            :
+              this.state.chamados.map(chamado =>
+                <ItemChamado chamado={chamado} 
+                tryToCloseOs = {this.tryToCloseOs}/>
+              )
+          }
+        </ul>
+      </div>
     );
   }
 }
 
+function updateState(toUpdateObject){
+  console.log("update chamado", toUpdateObject);
+  console.log("this", this);
+  this.setState({ chamados : toUpdateObject.chamados, isLoading : false });
+// this.setState(toUpdateObject);
+}
 class ItemChamado extends React.Component {
   state = {
     response: '',
