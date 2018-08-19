@@ -352,7 +352,9 @@ class ModuloFecharChamados extends React.Component {
         <ul className="ul-chamados">
           {
             this.state.chamados.length === 0 ?
-              <div style={{height: 60, background: "#cccccc80", textAlign: "center", fontSize: 20, paddingTop: 10}}>Não há chamados abertos</div>
+              <div style={{height: 60, background: "#cccccc80", textAlign: "center", fontSize: 20, paddingTop: 10}}>
+                Não há chamados abertos
+              </div>
             :
               this.state.chamados.map(chamado =>
                 <ItemChamado chamado={chamado} 
