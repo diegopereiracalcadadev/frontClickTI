@@ -2,6 +2,7 @@ import React from 'react';
 import {$, jQuery} from 'jquery';
 import {Modal} from 'react-materialize';
 import './App.css';
+import TextareaAutosize from 'react-autosize-textarea';
 import logoimg from "./imgs/logo.jpg";
 import loadingImgSrc from "./imgs/loading-plasma.gif";
 import axios from 'axios';
@@ -14,15 +15,16 @@ var Modulo = {
 
 class App extends React.Component {
   state = {
-    activeModule : Modulo.CLOSEOS
+    activeModule : Modulo.OPENOS
   }
 
+  
   constructor(props){
     super(props);
     console.log("[APP] - State no momento da renderização");
     console.log(this.state);
     this.changeAppActiveModule = this.changeAppActiveModule.bind(this);
-  }
+  }   
   
   changeAppActiveModule(nextModule){
     console.log("[APP] - changeAppActiveModule inivocado com parm:", nextModule);
@@ -53,10 +55,10 @@ class Header extends React.Component {
     // USING PARENT FUNCTION - ETAPA 2
     // TEM QUE FAZER O BIND PARA PODER USAR O THIS.PROPS NO HANDLE ON CLICK
     // OU SEJA, REPASSAR O CONTEXTO
-    this.handleMenuItemOnClick = this.handleMenuItemOnClick.bind(this);
+    this.handleOnMenuItemClick = this.handleOnMenuItemClick.bind(this);
   }
 
-  handleMenuItemOnClick(module){
+  handleOnMenuItemClick(module){
     console.log("[HEADER] - setActiveModule invocado com param: ", module);
     this.props.changeAppActiveModule(module);
 
@@ -71,7 +73,7 @@ class Header extends React.Component {
           <i className="material-icons">menu</i>
         </a>
         <span>{this.props.activeModule.title}</span>
-        <a class="btn-refresh right" href="javascript:window.location.reload()">
+        <a className="btn-refresh right" href="javascript:window.location.reload()">
           <i className="material-icons">refresh</i>
         </a>
         <ul id="slide-out" className="sidenav">
@@ -79,10 +81,10 @@ class Header extends React.Component {
             <img className="logo-img" src={logoimg} alt="Logo ClickTI" />
           </div>
           <li>
-            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.OPENOS)} className="waves-effect" href="#!">{Modulo.OPENOS.title}</a>
+            <a onClick={this.handleOnMenuItemClick.bind(null, Modulo.OPENOS)} className="waves-effect" href="#!">{Modulo.OPENOS.title}</a>
           </li>
           <li>
-            <a onClick={this.handleMenuItemOnClick.bind(null, Modulo.CLOSEOS)} className="waves-effect" href="#!">{Modulo.CLOSEOS.title}</a>
+            <a onClick={this.handleOnMenuItemClick.bind(null, Modulo.CLOSEOS)} className="waves-effect" href="#!">{Modulo.CLOSEOS.title}</a>
           </li>
         </ul>
       </nav>
@@ -99,9 +101,9 @@ class Body extends React.Component {
       <section className="body-componente">
         {this.props.activeModule == Modulo.OPENOS 
         ?
-        <div>abertura porra</div>
+        <ModuloAbrirChamado />
         :
-        <ListaChamados />} 
+        <ModuloFecharChamados />} 
       </section>
     )
   }
@@ -116,7 +118,80 @@ class Footer extends React.Component {
   }
 }
 
-class ListaChamados extends React.Component {
+class ModuloAbrirChamado extends React.Component{
+  send() {
+    const method = "POST";
+    const corpo = new FormData(this.form);
+    console.log("Corpo:" , corpo);
+    var myHeaders = new Headers({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Origin': '*',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin': '*'
+    });
+  
+    var myInit = { method: 'POST',
+                  headers: myHeaders,
+                  mode: 'cors',
+                  cache: 'default',
+                  body : corpo };
+
+    var myRequest = new Request('http://nodejs-mongo-persistent-backendclickti.193b.starter-ca-central-1.openshiftapps.com/open', myInit);
+
+    fetch(myRequest)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(json) {
+          alert('parsed json', json)
+        })
+        .catch(function(ex) {
+          console.log('parsing failed', ex)
+        });
+  }
+  render() {
+    return (
+      <div class="form-abrir-chamado">
+        <form ref={el => (this.form = el)}>
+          <label>Clientes</label>
+          <select name="clientName">
+            <option>Amontenegro</option>
+            <option>Bibi Barra</option>
+            <option>Bibi Campo Grande</option>
+            <option>Bibi Metro</option>
+            <option>Bibi Tijuca</option>
+            <option>Capi</option>
+            <option>Contarq</option>
+            <option>GlobalCafe</option>
+            <option>Lyon Construtora</option>
+            <option>MM</option>
+            <option>Mundo Verde</option>
+            <option>Pet Shop</option>
+            <option>Quality Fisio</option>
+            <option>Romarfel</option>
+            <option>UsaFlex</option>
+          </select>
+
+          <label>Email</label>
+          <select name="mailTo">
+            <option>amontenegroadvogados@terra.com.br</option>
+            <option>albericomontenegro@terra.com.br</option>
+          </select>
+
+          <label>Usuário:</label>
+          <input name="openingUser" />
+          
+          <label>Descrição:</label>
+          <TextareaAutosize name="description" style={{ minHeight: 100, maxHeight: 240 }} /> 
+        </form>
+        <button onClick={() => this.send()}>Send</button>
+      </div>
+    );
+  }
+}
+
+class ModuloFecharChamados extends React.Component {
   state = {
     chamados : [],
     showModal : false,
@@ -230,7 +305,7 @@ class ListaChamados extends React.Component {
                   mode: 'cors',
                   cache: 'default' };
 
-    var myRequest = new Request('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc', myInit);
+    var myRequest = new Request('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/getAll', myInit);
 
     fetch(myRequest)
     .then(function(response) {

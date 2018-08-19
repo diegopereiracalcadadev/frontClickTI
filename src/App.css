@@ -31,6 +31,12 @@
 
 /*----------------FIM COMMONS -----------------*/
 
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+/* ------------- MENU ----------------*/
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+
 .menu-container-logo {
   height: 200px;
   width: 100%;
@@ -44,6 +50,7 @@
 
 nav.topbar {
   background: #464646;
+  text-align: center;
 }
 
 /* FIM MENU */
@@ -308,5 +315,45 @@ section.body-componente {
   font-size: 20px;
   z-index: 99999;
 }
-
 /* ---------- FIM LOADING MSG ----------------*/
+
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+/* -------------MÓDULO ABRIR CHAMADO ----------------*/
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+.footer-container{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: red;
+  height: 50px;
+}
+
+.footer-button{
+  background: #292929;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  color: white;
+  font-size: 18px;
+}
+
+.form-abrir-chamado{
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  padding: 5px 7px 0 7px;
+}
+
+.form-abrir-chamado select{
+  display: block;
+}
+
+.form-abrir-chamado legend {
+  color: #a9a1a1;
+}
+/* ---------- FIM MÓDULO ABRIR CHAMADO ----------------*/
