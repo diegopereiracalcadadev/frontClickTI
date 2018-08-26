@@ -55,7 +55,7 @@ var sendPostRequest = (url, objeto, callback) => {
 
 class App extends React.Component {
   state = {
-    activeModule : Modulo.CLOSEOS
+    activeModule : Modulo.OPENOS
   }
 
   
@@ -150,19 +150,28 @@ class Footer extends React.Component {
 }
 
 class ModuloAbrirChamado extends React.Component{
-  send(e) {
-    const method = "POST";
-    const corpo = new FormData(this.form);
-    var objeto = {};
-    corpo.forEach(function(value, key){
-      objeto[key] = value;
-    });
-    var json = JSON.stringify(objeto);
-    console.log("Objeto convertido:" , objeto);
-    
+  state = {
+    chamado : {
+      clientName : "Capi",
+      mailTo : "diegopereiracalcada@gmail.com",
+      openingUser : "",
+      description : ""
+    }
+  }
+
+  constructor(props){
+    super(props);
+    this.handleClientNameOnChange = this.handleClientNameOnChange.bind(this);
+    this.handleMailToOnChange = this.handleMailToOnChange.bind(this);
+    this.handleOpeningUserOnChange = this.handleOpeningUserOnChange.bind(this);
+    this.handleDescriptionOnChange = this.handleDescriptionOnChange.bind(this);
+    this.send = this.send.bind(this);
+  }
+
+  send() {
     sendPostRequest(
       `${backEndHost}/open`, 
-      objeto,
+      this.state.chamado,
       function (corpo){
         console.log(corpo);
         alert(corpo.message);
@@ -170,12 +179,42 @@ class ModuloAbrirChamado extends React.Component{
     );
   }
 
+  handleClientNameOnChange(event) {
+    let newChamado = this.state.chamado;
+    newChamado.clientName = event.target.value;
+    this.setState({chamado : newChamado});
+    console.log("[ModuloAbrirChamado] - state DEPOIS de trocar clientName:", this.state);
+  }
+  
+  handleMailToOnChange(event){
+    let newChamado = this.state.chamado;
+    newChamado.mailTo = event.target.value;
+    this.setState({chamado : newChamado});
+    console.log("[ModuloAbrirChamado] - state DEPOIS de trocar mailTo:", this.state);
+  }
+
+  handleOpeningUserOnChange(event){
+    let newChamado = this.state.chamado;
+    newChamado.openingUser = event.target.value;
+    this.setState({chamado : newChamado});
+    console.log("[ModuloAbrirChamado] - state DEPOIS de trocar openingUser:", this.state);
+  }
+
+  handleDescriptionOnChange(event){
+    let newChamado = this.state.chamado;
+    newChamado.description = event.target.value;
+    this.setState({chamado : newChamado});
+    console.log("[ModuloAbrirChamado] - state DEPOIS de trocar description:", this.state);
+  }
+
   render() {
     return (
       <div class="form-abrir-chamado">
         <form ref={el => (this.form = el)}>
           <label>Clientes</label>
-          <select name="clientName">
+          <select name="clientName" 
+              value={this.state.chamado.clientName} 
+              onChange={this.handleClientNameOnChange}>
             <option>Amontenegro</option>
             <option>Bibi Barra</option>
             <option>Bibi Campo Grande</option>
@@ -194,17 +233,25 @@ class ModuloAbrirChamado extends React.Component{
           </select>
 
           <label>Email</label>
-          <select name="mailTo">
+          <select name="mailTo"
+              value={this.state.chamado.mailTo} 
+              onChange={this.handleMailToOnChange}>
             <option>tarapi007@gmail.com</option>
+            <option>diegopereiracalcada@gmail.com</option>
           </select>
 
           <label>Usuário:</label>
-          <input name="openingUser" />
+          <input name="openingUser" onBlur={this.handleOpeningUserOnChange}/>
           
           <label>Descrição:</label>
-          <TextareaAutosize name="description" style={{ minHeight: 100, maxHeight: 240 }} /> 
+          <TextareaAutosize 
+              name="description" 
+              style={{ minHeight: 100, maxHeight: 240 }}
+              onBlur={this.handleDescriptionOnChange}
+              /> 
+             
         </form>
-        <button onClick={(e) => this.send(e)}>Send</button>
+        <button onClick={() => this.send()}>Send</button>
       </div>
     );
   }
@@ -298,6 +345,7 @@ class ModuloFecharChamados extends React.Component {
 function updateState(toUpdateObject){
   this.setState({ chamados : toUpdateObject.chamados, isLoading : false });
 }
+
 class ItemChamado extends React.Component {
   state = {
     response: '',
@@ -484,6 +532,7 @@ class ErrorLoadingOrders extends React.Component {
     background: "#ff0000a8",
     padding: "20px 0"
   }
+
   render(){
     return (
       <div style={this.errorStyle}>
