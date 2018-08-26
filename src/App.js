@@ -55,7 +55,7 @@ var sendPostRequest = (url, objeto, callback) => {
 
 class App extends React.Component {
   state = {
-    activeModule : Modulo.OPENOS
+    activeModule : Modulo.CLOSEOS
   }
 
   
@@ -70,16 +70,12 @@ class App extends React.Component {
     console.log("[APP] - changeAppActiveModule inivocado com parm:", nextModule);
     this.setState({activeModule : nextModule});
     console.log("[APP] - State após alteração de state do changeAppActiveModule :", this.state);
-    // chama funcao filha
 
   }
 
   render() {
     return (
       <div>
-        {/* 
-            USING PARENT FUNCTION - ETAPA 1
-        */}
         <Header activeModule={this.state.activeModule} changeAppActiveModule = {this.changeAppActiveModule} />
         <Body activeModule={this.state.activeModule} />
         <Footer />
@@ -92,17 +88,12 @@ class Header extends React.Component {
  
   constructor(props) {
     super(props);
-    // USING PARENT FUNCTION - ETAPA 2
-    // TEM QUE FAZER O BIND PARA PODER USAR O THIS.PROPS NO HANDLE ON CLICK
-    // OU SEJA, REPASSAR O CONTEXTO
     this.handleOnMenuItemClick = this.handleOnMenuItemClick.bind(this);
   }
 
   handleOnMenuItemClick(module){
     console.log("[HEADER] - setActiveModule invocado com param: ", module);
     this.props.changeAppActiveModule(module);
-
-    //changeModule(module);
     document.getElementsByClassName("sidenav-overlay")[0].click();
   }
 
@@ -237,89 +228,6 @@ class ModuloFecharChamados extends React.Component {
   }
 
   componentDidMount() {
-    // axios.get(`chamados/getOpeneds`)
-    // axios.get(`http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc`)
-    //   .then(res => {
-    //     console.log("axios.get(`chamados/getOpeneds`) retornou com sucesso");
-    //     console.log(res)
-    //     if(res.data.length === 0){
-    //       this.setState({ chamados : res.data, isLoading : false });
-    //     } else {
-    //       this.setState({ chamados : res.data, isLoading : false });
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     this.setState({isLoading : false, isInError : true});
-    //   });
-      
-    // const jsonp = require('jsonp');
-
-    // jsonp('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc', null, (err, data) => {
-    //   if (err) {
-    //     console.error(err.message);
-    //     this.setState({isLoading : false, isInError : true});
-    //   } else {
-    //     console.log(data);
-    //     console.log("axios.get(`chamados/getOpeneds`) retornou com sucesso");
-    //     if(data.length === 0){
-    //       this.setState({ chamados : data, isLoading : false });
-    //     } else {
-    //       this.setState({ chamados : data, isLoading : false });
-    //     }
-    //   }
-    // });
-
-    // const axiospro = require('axios');
-    // axiospro.jsonp('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc')
-    //     .then(function (response) {
-    //       console.log("response");
-    //       console.log(response);
-    //     })
-    //     .catch(function (error) {
-    //       console.log("error");
-    //       console.log(error);
-    //     });
-
-
-    // jsonpP("http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc", 
-    //     null, 
-    //     response => {
-    //       console.log("response");
-    //       console.log(response);
-    //     }
-    // ).promise;
-    // .then()
-    // .catch(error => {
-    //   console.log("error");
-    //   console.log(error);});
-          // axios.get('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc', {
-          //   timeout: 5000,
-          // }).then(function (response) {
-          //   console.log("response");
-          //   console.log(response);
-          // })
-          // .catch(function (error) {
-          //   console.log("error");
-          //   console.log(error);
-          // });
-    // const JSONP = require('browser-jsonp');
-    // JSONP({
-    //   url: 'http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc',
-    //   data: { foo: 'bar' },
-    //   success: function(data) { console.log(data); }
-    // });
-    
-    // const fetchJsonp = require('fetch-jsonp');
-    // fetchJsonp('http://clickti-furacao2000.193b.starter-ca-central-1.openshiftapps.com/pc', {timeout: 10000})
-    //     .then(function(response) {
-    //       return response.json()
-    //     }).then(function(json) {
-    //       console.log('parsed json', json)
-    //     }).catch(function(ex) {
-    //       console.log('parsing failed', ex)
-    //     });
-
-
     console.log("tentativa 2153");
     var myHeaders = new Headers({
       'Accept': 'application/json',
@@ -333,11 +241,9 @@ class ModuloFecharChamados extends React.Component {
                   headers: myHeaders,
                   mode: 'cors',
                   cache: 'default' };
-                  
 
     var myRequest = new Request(`${backEndHost}/getAll`, myInit);
     console.log("Disparando requisição para ", myRequest);
-    
 
     fetch(myRequest)
     .then(function(response) {
@@ -352,8 +258,6 @@ class ModuloFecharChamados extends React.Component {
     
   }
 
-  
-
   tryToCloseOs(chamado){
     console.log("tryToCloseOs invoked");
     console.log(chamado);
@@ -365,9 +269,6 @@ class ModuloFecharChamados extends React.Component {
 
   render() {
     return (
-      // <div>
-      //   {this.state.chamados} 
-      // </div>
       this.state.isLoading === true || this.state.isInError === true  
       ?
       this.state.isLoading ? <LoadingGif /> : <ErrorLoadingOrders />
@@ -442,7 +343,6 @@ class ItemChamado extends React.Component {
             <p className="nome-cliente">{this.state.clientName}</p>
             <p className="desc-chamado">{this.state.description}</p>
           </div>
-          
           <div className="status-chamado">
             <div className="infs-abertura" style={{marginBottom: 10}}>
               <p>Aberto em</p> 
@@ -485,7 +385,6 @@ class SimpleModal extends React.Component{
         osBeingClosed : nextProps.osBeingClosed
       });
   }
-
   
   handleOnConfirmClick = () => {
     if(this.state.isCloseBtnActive){
@@ -502,9 +401,7 @@ class SimpleModal extends React.Component{
       
       this.sendCloseRequest(osBeingClosed)
       .then(res => {
-        //this.setState({ response: res.status });
         if(res.success && res.success == true){
-          // this.setState({ show: false });
           alert(`Chamado ${osBeingClosed.osNumber} fechado com sucesso.`);
           window.location.reload();
         } else {
@@ -522,9 +419,6 @@ class SimpleModal extends React.Component{
     if (response.status !== 200) throw Error(body.message);
     return body;
   }
-
-  
-  
 
   render(){  
     return (
