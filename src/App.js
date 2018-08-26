@@ -125,7 +125,7 @@ class Header extends React.Component {
 
 class Body extends React.Component {
   render() {
-    console.log("Renderizando body");
+    console.log("[Body] - Renderizando body");
     console.log(this.props.activeModule);
     
     return (
@@ -228,7 +228,7 @@ class ModuloFecharChamados extends React.Component {
   }
 
   componentDidMount() {
-    console.log("tentativa 2153");
+    console.log("[ModuloFecharChamados] - Carregando chamados do servidor: " + backEndHost);
     var myHeaders = new Headers({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -243,16 +243,16 @@ class ModuloFecharChamados extends React.Component {
                   cache: 'default' };
 
     var myRequest = new Request(`${backEndHost}/getAll`, myInit);
-    console.log("Disparando requisição para ", myRequest);
+    console.log("[ModuloFecharChamados] - Disparando requisição: ", myRequest);
 
     fetch(myRequest)
     .then(function(response) {
       return response.json();
     }).then(function(json) {
-      console.log('parsed json', json);
+      console.log('[ModuloFecharChamados] - Json respondido:', json);
       updateState({chamados : json});
     }).catch((ex) => {
-      console.log('Erro ao parsear. ', ex);
+      console.log('[ModuloFecharChamados] - Erro ao parsear. ', ex);
       this.setState({isLoading : false, isInError : true});
     });
     
@@ -296,10 +296,7 @@ class ModuloFecharChamados extends React.Component {
 }
 
 function updateState(toUpdateObject){
-  console.log("update chamado", toUpdateObject);
-  console.log("this", this);
   this.setState({ chamados : toUpdateObject.chamados, isLoading : false });
-// this.setState(toUpdateObject);
 }
 class ItemChamado extends React.Component {
   state = {
@@ -308,7 +305,6 @@ class ItemChamado extends React.Component {
   };
 
   constructor(props) {
-    console.log("ItemChamado Constuctor invoked");
     super(props);
     
     this.state._id = props.chamado._id;
