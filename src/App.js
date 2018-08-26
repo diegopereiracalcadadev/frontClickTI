@@ -13,11 +13,49 @@ var Modulo = {
   CLOSEOS : { key : "closeos",title : "Fechar Chamados"}
 };
 
-var remoteHostDomain = "http://nodejs-mongo-persistent-backendclick.193b.starter-ca-central-1.openshiftapps.com";
+var backEndHost = "http://localhost:8080";//"http://nodejs-mongo-persistent-backendclick.193b.starter-ca-central-1.openshiftapps.com";
+
+
+var sendJsonRequest = async (url, metodo, objeto, callback) => {
+  console.log("Enviando solicitação");
+  try {
+    const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(objeto)
+        });
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    if(body.returnCode == -1){
+      alert("Erro:" + body.message);
+      console.log(body.message);
+    }
+    if (callback){
+      callback(body);
+    } 
+    return body;
+  } catch (error) {
+    alert(error);
+  }
+}
+
+var sendGetRequest = (url, callback) => {
+  console.log("Method sendGetRequest was invoked.", url);
+  return sendJsonRequest(url, "GET", callback);
+}
+
+var sendPostRequest = (url, objeto, callback) => {
+  console.log("Method sendPostRequest was invoked.");
+  console.log(url, objeto);
+  return sendJsonRequest(url, "POST", objeto, callback);
+}
 
 class App extends React.Component {
   state = {
-    activeModule : Modulo.CLOSEOS
+    activeModule : Modulo.OPENOS
   }
 
   
@@ -121,37 +159,26 @@ class Footer extends React.Component {
 }
 
 class ModuloAbrirChamado extends React.Component{
-  send() {
+  send(e) {
     const method = "POST";
     const corpo = new FormData(this.form);
-    console.log("Corpo:" , corpo);
-    var myHeaders = new Headers({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Origin': '*',
-      'Access-Control-Allow-Headers': '*',
-      'Access-Control-Allow-Origin': '*'
+    var objeto = {};
+    corpo.forEach(function(value, key){
+      objeto[key] = value;
     });
-  
-    var myInit = { method: 'POST',
-                  headers: myHeaders,
-                  mode: 'cors',
-                  cache: 'default',
-                  body : corpo };
-
-    var myRequest = new Request(remoteHostDomain + '/open', myInit);
-
-    fetch(myRequest)
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(json) {
-          alert('parsed json', json)
-        })
-        .catch(function(ex) {
-          console.log('parsing failed', ex)
-        });
+    var json = JSON.stringify(objeto);
+    console.log("Objeto convertido:" , objeto);
+    
+    sendPostRequest(
+      `${backEndHost}/open`, 
+      objeto,
+      function (corpo){
+        console.log(corpo);
+        alert(corpo.message);
+      }
+    );
   }
+
   render() {
     return (
       <div class="form-abrir-chamado">
@@ -177,8 +204,7 @@ class ModuloAbrirChamado extends React.Component{
 
           <label>Email</label>
           <select name="mailTo">
-            <option>amontenegroadvogados@terra.com.br</option>
-            <option>albericomontenegro@terra.com.br</option>
+            <option>tarapi007@gmail.com</option>
           </select>
 
           <label>Usuário:</label>
@@ -187,7 +213,7 @@ class ModuloAbrirChamado extends React.Component{
           <label>Descrição:</label>
           <TextareaAutosize name="description" style={{ minHeight: 100, maxHeight: 240 }} /> 
         </form>
-        <button onClick={() => this.send()}>Send</button>
+        <button onClick={(e) => this.send(e)}>Send</button>
       </div>
     );
   }
@@ -309,8 +335,8 @@ class ModuloFecharChamados extends React.Component {
                   cache: 'default' };
                   
 
-    var myRequest = new Request(remoteHostDomain + '/getAll', myInit);
-    console.log("Disparando requisição para " + remoteHostDomain + "/getAll");
+    var myRequest = new Request(`${backEndHost}/getAll`, myInit);
+    console.log("Disparando requisição para ", myRequest);
     
 
     fetch(myRequest)
@@ -319,8 +345,9 @@ class ModuloFecharChamados extends React.Component {
     }).then(function(json) {
       console.log('parsed json', json);
       updateState({chamados : json});
-    }).catch(function(ex) {
-      console.log('parsing failed', ex)
+    }).catch((ex) => {
+      console.log('Erro ao parsear. ', ex);
+      this.setState({isLoading : false, isInError : true});
     });
     
   }
@@ -495,6 +522,9 @@ class SimpleModal extends React.Component{
     if (response.status !== 200) throw Error(body.message);
     return body;
   }
+
+  
+  
 
   render(){  
     return (
