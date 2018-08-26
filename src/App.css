@@ -29,6 +29,14 @@
   cursor: not-allowed;
 }
 
+.btn-full50{
+  width: 100%;
+  height: 50px;
+  background: #113356;
+  color: white;
+  font-size: 20px;
+}
+
 /*----------------FIM COMMONS -----------------*/
 
 /* -------------------------------------------------*/

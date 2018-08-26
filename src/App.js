@@ -153,9 +153,7 @@ class ModuloAbrirChamado extends React.Component{
   state = {
     chamado : {
       clientName : "Capi",
-      mailTo : "diegopereiracalcada@gmail.com",
-      openingUser : "",
-      description : ""
+      mailTo : "diegopereiracalcada@gmail.com"
     }
   }
 
@@ -169,12 +167,25 @@ class ModuloAbrirChamado extends React.Component{
   }
 
   send() {
+    if(!this.state.chamado.clientName 
+          || !this.state.chamado.description
+          || !this.state.chamado.mailTo  
+          || !this.state.chamado.openingUser
+          || this.state.chamado.clientName.trim() === ""
+          || this.state.chamado.description.trim() === "" 
+          || this.state.chamado.mailTo.trim() === "" 
+          || this.state.chamado.openingUser.trim() === ""){
+      alert("Preencha todos os campos por favor");
+      console.log("this.state: ", this.state);
+      return false;
+    }
     sendPostRequest(
       `${backEndHost}/open`, 
       this.state.chamado,
-      function (corpo){
+      (corpo) => {
         console.log(corpo);
         alert(corpo.message);
+        window.location.reload();
       }
     );
   }
@@ -241,17 +252,18 @@ class ModuloAbrirChamado extends React.Component{
           </select>
 
           <label>Usuário:</label>
-          <input name="openingUser" onBlur={this.handleOpeningUserOnChange}/>
+          <input name="openingUser" 
+              defaultValue={this.state.chamado.openingUser} 
+              onBlur={this.handleOpeningUserOnChange}/>
           
           <label>Descrição:</label>
           <TextareaAutosize 
               name="description" 
               style={{ minHeight: 100, maxHeight: 240 }}
-              onBlur={this.handleDescriptionOnChange}
-              /> 
-             
+              defaultValue={this.state.chamado.description} 
+              onBlur={this.handleDescriptionOnChange} /> 
         </form>
-        <button onClick={() => this.send()}>Send</button>
+        <button class="btn-full50" onClick={() => this.send()}>Confirmar</button>
       </div>
     );
   }
