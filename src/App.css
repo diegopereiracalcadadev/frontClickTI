@@ -212,7 +212,7 @@ section.body-componente {
 }
 
 .simple-modal-dialog{
-  width: 70%;
+  width: 90%;
   height: 90%;
   background: white;
   min-height: 550px;
@@ -287,12 +287,12 @@ section.body-componente {
   background: #113356;
 }
 
-.opening-user-container {
+.opening-chamado-container {
   height: 100%;
 } 
 
-.opening-user-container > textarea {
-  height: calc(100% - 162px);
+.opening-chamado-container > textarea {
+  height: 230px;
 }
 
 /* ---------- FIM MODAL DE FECHAMENTO ----------------*/
@@ -365,8 +365,14 @@ section.body-componente {
 .form-abrir-chamado legend {
   color: #a9a1a1;
 }
+
 /* ---------- FIM MÓDULO ABRIR CHAMADO ----------------*/
 
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+/* -------------COMMONS ----------------*/
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
 
 .expanded-desc.desc-cont {
   position: fixed;
@@ -376,7 +382,6 @@ section.body-componente {
   right: 0;
   background: white;
 }
-
 
 .desc-cont .btn-close-desc {
   float: right;
@@ -409,3 +414,10 @@ section.body-componente {
 .invisible{
   display: none !important;
 }
+
+.desc-cont > textarea {
+  height: 230px;
+}
+
+/* ---------- FIM MÓDULO ABRIR CHAMADO ----------------*/
+

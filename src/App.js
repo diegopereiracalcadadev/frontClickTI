@@ -451,7 +451,14 @@ class SimpleModal extends React.Component{
   state = {
     showModal : this.props.showModal,
     osBeingClosed : this.props.osBeingClosed,
-    isCloseBtnActive : true
+    isCloseBtnActive : true,
+    expandedDesc : false
+  }
+
+  constructor(props){
+    super(props);
+    this.handleDescriptionOnFocus = this.handleDescriptionOnFocus.bind(this);
+    this.handleDescriptionCloseBtn = this.handleDescriptionCloseBtn.bind(this);
   }
 
   componentWillReceiveProps(nextProps){
@@ -496,6 +503,15 @@ class SimpleModal extends React.Component{
     return body;
   }
 
+  handleDescriptionOnFocus(event){
+    this.setState({expandedDesc : true});
+  }
+  
+  handleDescriptionCloseBtn(event){
+    event.preventDefault();
+    this.setState({expandedDesc : false});
+  }
+
   render(){  
     return (
       this.state.showModal
@@ -516,7 +532,7 @@ class SimpleModal extends React.Component{
             </div>
           </div>
           <div className="simple-modal-body">
-            <div className="opening-user-container">
+            <div className="opening-chamado-container">
               <label>Usuário solicitante</label>
               <input className="opening-user" value={this.state.osBeingClosed.openingUser} onChange={(e) =>{
                   var newOpeningUser =  e.target.value;
@@ -534,13 +550,24 @@ class SimpleModal extends React.Component{
                   this.setState({osBeingClosed : newOsBeingClosed });
                 }} type="text"/>
               
-              <label>Descrição:</label>
-              <textarea className="solution" onChange={(e) =>{
-                  var newSolution =  e.target.value;
-                  var newOsBeingClosed = this.state.osBeingClosed;
-                  newOsBeingClosed.solution = newSolution;
-                  this.setState({osBeingClosed : newOsBeingClosed });
-                }} ></textarea>
+              <div className={this.state.expandedDesc === true ? "desc-cont expanded-desc" : "desc-cont"}>
+                <label>Descrição:</label>
+                <button 
+                    className={this.state.expandedDesc === true ? "btn-close-desc" : "btn-close-desc invisible"}
+                    onClick={this.handleDescriptionCloseBtn}>
+                  X
+                </button>
+                <textarea 
+                    className="solution" 
+                    onChange={(e) =>{
+                        var newSolution =  e.target.value;
+                        var newOsBeingClosed = this.state.osBeingClosed;
+                        newOsBeingClosed.solution = newSolution;
+                        this.setState({osBeingClosed : newOsBeingClosed });
+                    }} 
+                    onFocus={this.handleDescriptionOnFocus}>
+                </textarea>
+              </div>
             </div>
           </div>
           
