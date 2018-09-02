@@ -215,6 +215,7 @@ section.body-componente {
   width: 70%;
   height: 90%;
   background: white;
+  min-height: 550px;
 }
 
 /* -------------HEADER ----------------*/
@@ -365,3 +366,46 @@ section.body-componente {
   color: #a9a1a1;
 }
 /* ---------- FIM MÓDULO ABRIR CHAMADO ----------------*/
+
+
+.expanded-desc.desc-cont {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+}
+
+
+.desc-cont .btn-close-desc {
+  float: right;
+  margin-right: 12px;
+  margin-top: 5px;
+  font-size: 29px;
+  border: none;
+  background: white;
+  color: #8e8b8b;
+}
+
+.expanded-desc textarea {
+  position: fixed;
+  bottom: 0;
+  top: 50px;
+  left: 5px;
+  height: calc(100% - 50px) !important;
+  max-height: unset !important;
+  width: calc(100% - 10px) !important;
+}
+
+
+.expanded-desc label {
+  font-size: 26px;
+  margin-left: 10px;
+  margin-top: 5px;
+  position: absolute;
+}
+
+.invisible{
+  display: none !important;
+}

@@ -13,7 +13,7 @@ var Modulo = {
   CLOSEOS : { key : "closeos",title : "Fechar Chamados"}
 };
 
-var backEndHost = "http://localhost:8080";//"http://nodejs-mongo-persistent-backendclick.193b.starter-ca-central-1.openshiftapps.com";
+var backEndHost = "http://192.168.0.12:8080";//"http://nodejs-mongo-persistent-backendclick.193b.starter-ca-central-1.openshiftapps.com";
 
 
 var sendJsonRequest = async (url, metodo, objeto, callback) => {
@@ -55,7 +55,7 @@ var sendPostRequest = (url, objeto, callback) => {
 
 class App extends React.Component {
   state = {
-    activeModule : Modulo.OPENOS
+    activeModule : Modulo.CLOSEOS
   }
 
   
@@ -154,7 +154,8 @@ class ModuloAbrirChamado extends React.Component{
     chamado : {
       clientName : "Capi",
       mailTo : "diegopereiracalcada@gmail.com"
-    }
+    },
+    expandedDesc : false
   }
 
   constructor(props){
@@ -163,6 +164,8 @@ class ModuloAbrirChamado extends React.Component{
     this.handleMailToOnChange = this.handleMailToOnChange.bind(this);
     this.handleOpeningUserOnChange = this.handleOpeningUserOnChange.bind(this);
     this.handleDescriptionOnChange = this.handleDescriptionOnChange.bind(this);
+    this.handleDescriptionOnFocus = this.handleDescriptionOnFocus.bind(this);
+    this.handleDescriptionCloseBtn = this.handleDescriptionCloseBtn.bind(this);
     this.send = this.send.bind(this);
   }
 
@@ -218,6 +221,15 @@ class ModuloAbrirChamado extends React.Component{
     console.log("[ModuloAbrirChamado] - state DEPOIS de trocar description:", this.state);
   }
 
+  handleDescriptionOnFocus(event){
+    this.setState({expandedDesc : true});
+  }
+  
+  handleDescriptionCloseBtn(event){
+    event.preventDefault();
+    this.setState({expandedDesc : false});
+  }
+
   render() {
     return (
       <div class="form-abrir-chamado">
@@ -256,12 +268,20 @@ class ModuloAbrirChamado extends React.Component{
               defaultValue={this.state.chamado.openingUser} 
               onBlur={this.handleOpeningUserOnChange}/>
           
-          <label>Descrição:</label>
-          <TextareaAutosize 
-              name="description" 
-              style={{ minHeight: 100, maxHeight: 240 }}
-              defaultValue={this.state.chamado.description} 
-              onBlur={this.handleDescriptionOnChange} /> 
+          <div className={this.state.expandedDesc === true ? "desc-cont expanded-desc" : "desc-cont"}>
+            <label>Descrição:</label>
+            <button 
+                className={this.state.expandedDesc === true ? "btn-close-desc" : "btn-close-desc invisible"}
+                onClick={this.handleDescriptionCloseBtn}>
+            X
+            </button>
+            <TextareaAutosize 
+                name="description" 
+                style={{ minHeight: 100, maxHeight: 240 }}
+                defaultValue={this.state.chamado.description} 
+                onBlur={this.handleDescriptionOnChange}
+                onFocus={this.handleDescriptionOnFocus} /> 
+          </div>
         </form>
         <button class="btn-full50" onClick={() => this.send()}>Confirmar</button>
       </div>
@@ -301,7 +321,7 @@ class ModuloFecharChamados extends React.Component {
                   mode: 'cors',
                   cache: 'default' };
 
-    var myRequest = new Request(`${backEndHost}/getAll`, myInit);
+    var myRequest = new Request(`${backEndHost}/getOpeneds`, myInit);
     console.log("[ModuloFecharChamados] - Disparando requisição: ", myRequest);
 
     fetch(myRequest)
@@ -457,7 +477,7 @@ class SimpleModal extends React.Component{
       
       this.sendCloseRequest(osBeingClosed)
       .then(res => {
-        if(res.success && res.success == true){
+        if(res.returnCode && res.returnCode == 1){
           alert(`Chamado ${osBeingClosed.osNumber} fechado com sucesso.`);
           window.location.reload();
         } else {
@@ -470,7 +490,7 @@ class SimpleModal extends React.Component{
   
   sendCloseRequest = async (osBeingClosed) => {
     console.log("Enviando solicitação de fechamento para a OS: " + osBeingClosed.osNumber);
-    const response = await fetch(`chamados/close?_id=${osBeingClosed._id}&osNumber=${osBeingClosed.osNumber}&openingUser=${osBeingClosed.openingUser}&mailTo=${osBeingClosed.mailTo}&description=${osBeingClosed.description}&solution=${osBeingClosed.solution}`);
+    const response = await fetch(`${backEndHost}/close?_id=${osBeingClosed._id}&osNumber=${osBeingClosed.osNumber}&openingUser=${osBeingClosed.openingUser}&mailTo=${osBeingClosed.mailTo}&description=${osBeingClosed.description}&solution=${osBeingClosed.solution}`);
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
@@ -514,6 +534,7 @@ class SimpleModal extends React.Component{
                   this.setState({osBeingClosed : newOsBeingClosed });
                 }} type="text"/>
               
+              <label>Descrição:</label>
               <textarea className="solution" onChange={(e) =>{
                   var newSolution =  e.target.value;
                   var newOsBeingClosed = this.state.osBeingClosed;
