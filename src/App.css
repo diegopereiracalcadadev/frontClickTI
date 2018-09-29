@@ -37,6 +37,10 @@
   font-size: 20px;
 }
 
+.btn-full50:focus{
+  background: #145292;
+}
+
 /*----------------FIM COMMONS -----------------*/
 
 /* -------------------------------------------------*/
@@ -374,16 +378,16 @@ section.body-componente {
 /* -------------------------------------------------*/
 /* -------------------------------------------------*/
 
-.expanded-desc.desc-cont {
+.expanded-desc.desc-ctnr {
   position: fixed;
   top: 0;
-  bottom: 0;
+  bottom: 50px;
   left: 0;
   right: 0;
   background: white;
 }
 
-.desc-cont .btn-close-desc {
+.desc-ctnr .btn-close-desc {
   float: right;
   margin-right: 12px;
   margin-top: 5px;
@@ -398,7 +402,7 @@ section.body-componente {
   bottom: 0;
   top: 50px;
   left: 5px;
-  height: calc(100% - 50px) !important;
+  height: calc(100% - 105px) !important;
   max-height: unset !important;
   width: calc(100% - 10px) !important;
 }
@@ -415,8 +419,16 @@ section.body-componente {
   display: none !important;
 }
 
-.desc-cont > textarea {
+.desc-ctnr > textarea {
   height: 230px;
+}
+
+.btn-confirmar{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 1px solid #7c6daf;
 }
 
 /* ---------- FIM MÓDULO ABRIR CHAMADO ----------------*/

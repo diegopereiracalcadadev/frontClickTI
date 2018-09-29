@@ -1,0 +1,4 @@
+[0826/110913.993:ERROR:file_io.cc(89)] ReadExactly: expected 2912, observed 0
+[0826/110913.994:ERROR:crash_report_database_win.cc(445)] failed to read records
+[0826/153930.918:ERROR:file_io.cc(89)] ReadExactly: expected 2912, observed 0
+[0826/153930.918:ERROR:crash_report_database_win.cc(445)] failed to read records

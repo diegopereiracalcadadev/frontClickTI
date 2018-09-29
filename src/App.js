@@ -3,10 +3,13 @@ import {$, jQuery} from 'jquery';
 import {Modal} from 'react-materialize';
 import './App.css';
 import TextareaAutosize from 'react-autosize-textarea';
-import logoimg from "./imgs/logo.jpg";
 import loadingImgSrc from "./imgs/loading-plasma.gif";
 import axios from 'axios';
 import Moment from 'react-moment';
+import Select from 'react-select';
+import Creatable from 'react-select/lib/Creatable';
+import Header from './components/Header'
+
  
 var Modulo = {
   OPENOS : { key : "openos",title : "Abrir Chamado"},
@@ -55,7 +58,7 @@ var sendPostRequest = (url, objeto, callback) => {
 
 class App extends React.Component {
   state = {
-    activeModule : Modulo.CLOSEOS
+    activeModule : Modulo.OPENOS
   }
 
   
@@ -84,44 +87,6 @@ class App extends React.Component {
   }
 }
 
-class Header extends React.Component {
- 
-  constructor(props) {
-    super(props);
-    this.handleOnMenuItemClick = this.handleOnMenuItemClick.bind(this);
-  }
-
-  handleOnMenuItemClick(module){
-    console.log("[HEADER] - setActiveModule invocado com param: ", module);
-    this.props.changeAppActiveModule(module);
-    document.getElementsByClassName("sidenav-overlay")[0].click();
-  }
-
-  render() {
-    return (
-      <nav className="topbar">
-        <a href="#" data-target="slide-out" className="sidenav-trigger show-on-large">
-          <i className="material-icons">menu</i>
-        </a>
-        <span>{this.props.activeModule.title}</span>
-        <a className="btn-refresh right" href="javascript:window.location.reload()">
-          <i className="material-icons">refresh</i>
-        </a>
-        <ul id="slide-out" className="sidenav">
-          <div className="menu-container-logo">
-            <img className="logo-img" src={logoimg} alt="Logo ClickTI" />
-          </div>
-          <li>
-            <a onClick={this.handleOnMenuItemClick.bind(null, Modulo.OPENOS)} className="waves-effect" href="#!">{Modulo.OPENOS.title}</a>
-          </li>
-          <li>
-            <a onClick={this.handleOnMenuItemClick.bind(null, Modulo.CLOSEOS)} className="waves-effect" href="#!">{Modulo.CLOSEOS.title}</a>
-          </li>
-        </ul>
-      </nav>
-    );
-  }
-}
 
 class Body extends React.Component {
   render() {
@@ -149,19 +114,41 @@ class Footer extends React.Component {
   }
 }
 
+const mailToOptions = [
+  { value: 'diegopereiracalcada@gmail.com', label: 'diegopereiracalcada@gmail.com' },
+  { value: 'tarapi007@gmail.com', label: 'tarapi007@gmail.com' }
+];
+
+const clientsList = [
+  { value: 'amontenegro', label : 'Amontenegro'},
+  { value: 'bibi Barra', label : 'Bibi Barra'},
+  { value: 'bibi Campo Grande', label : 'Bibi Campo Grande'},
+  { value: 'bibi Metro', label : 'Bibi Metro'},
+  { value: 'bibi Tijuca', label : 'Bibi Tijuca'},
+  { value: 'capi', label : 'Capi'},
+  { value: 'contarq', label : 'Contarq'},
+  { value: 'globalCafe', label : 'GlobalCafe'},
+  { value: 'lyon Construtora', label : 'Lyon Construtora'},
+  { value: 'mm', label : 'MM'},
+  { value: 'mundo Verde', label : 'Mundo Verde'},
+  { value: 'pet Shop', label : 'Pet Shop'},
+  { value: 'quality Fisio', label : 'Quality Fisio'},
+  { value: 'romarfel', label : 'Romarfel'},
+  { value: 'usaFlex', label : 'UsaFlex'}
+]
+
 class ModuloAbrirChamado extends React.Component{
   state = {
-    chamado : {
-      clientName : "Capi",
-      mailTo : "diegopereiracalcada@gmail.com"
-    },
-    expandedDesc : false
+    clientName : "",
+    mailTo : "diegopereiracalcada@gmail.com",
+    openingUser : "",
+    description : "",
+    isExpandedDesc : false,
   }
+  
 
   constructor(props){
     super(props);
-    this.handleClientNameOnChange = this.handleClientNameOnChange.bind(this);
-    this.handleMailToOnChange = this.handleMailToOnChange.bind(this);
     this.handleOpeningUserOnChange = this.handleOpeningUserOnChange.bind(this);
     this.handleDescriptionOnChange = this.handleDescriptionOnChange.bind(this);
     this.handleDescriptionOnFocus = this.handleDescriptionOnFocus.bind(this);
@@ -170,120 +157,103 @@ class ModuloAbrirChamado extends React.Component{
   }
 
   send() {
-    if(!this.state.chamado.clientName 
-          || !this.state.chamado.description
-          || !this.state.chamado.mailTo  
-          || !this.state.chamado.openingUser
-          || this.state.chamado.clientName.trim() === ""
-          || this.state.chamado.description.trim() === "" 
-          || this.state.chamado.mailTo.trim() === "" 
-          || this.state.chamado.openingUser.trim() === ""){
-      alert("Preencha todos os campos por favor");
-      console.log("this.state: ", this.state);
-      return false;
-    }
-    sendPostRequest(
-      `${backEndHost}/open`, 
-      this.state.chamado,
-      (corpo) => {
-        console.log(corpo);
-        alert(corpo.message);
-        window.location.reload();
-      }
-    );
+    console.log(this.state);
+    // if(!this.state.clientName 
+    //       || !this.state.description
+    //       || !this.state.mailTo  
+    //       || !this.state.openingUser
+    //       || this.state.clientName.trim() === ""
+    //       || this.state.description.trim() === "" 
+    //       || this.state.mailTo.trim() === "" 
+    //       || this.state.openingUser.trim() === ""){
+    //   alert("Preencha todos os campos por favor");
+    //   return false;
+    // }
+    // sendPostRequest(
+    //   `${backEndHost}/open`, 
+    //   this.state,
+    //   (corpo) => {
+    //     console.log(corpo);
+    //     alert(corpo.message);
+    //     window.location.reload();
+    //   }
+    // );
   }
 
-  handleClientNameOnChange(event) {
-    let newChamado = this.state.chamado;
-    newChamado.clientName = event.target.value;
-    this.setState({chamado : newChamado});
-    console.log("[ModuloAbrirChamado] - state DEPOIS de trocar clientName:", this.state);
+  handleOnClientNameChange = (selectedOption) => {
+    this.setState({ clientName : selectedOption });
+    console.log("[ModuloAbrirChamado] - handleOnClientNameChange - State após execução ", this.state);
   }
   
-  handleMailToOnChange(event){
-    let newChamado = this.state.chamado;
-    newChamado.mailTo = event.target.value;
-    this.setState({chamado : newChamado});
-    console.log("[ModuloAbrirChamado] - state DEPOIS de trocar mailTo:", this.state);
+  handleOnMailToChange = (selectedOption) => {
+    this.setState({ mailTo : selectedOption });
+    console.log("[ModuloAbrirChamado] - handleOnMailToChange - State após execução", this.state);
   }
 
   handleOpeningUserOnChange(event){
-    let newChamado = this.state.chamado;
-    newChamado.openingUser = event.target.value;
-    this.setState({chamado : newChamado});
-    console.log("[ModuloAbrirChamado] - state DEPOIS de trocar openingUser:", this.state);
+    this.setState({openingUser : event.target.value});
+    console.log("[ModuloAbrirChamado] - handleOpeningUserOnChange - State após execução", this.state);
   }
 
   handleDescriptionOnChange(event){
-    let newChamado = this.state.chamado;
-    newChamado.description = event.target.value;
-    this.setState({chamado : newChamado});
-    console.log("[ModuloAbrirChamado] - state DEPOIS de trocar description:", this.state);
+    this.setState({description : event.target.value});
+    console.log("[ModuloAbrirChamado] - handleDescriptionOnChange - State após execução", this.state);
   }
 
   handleDescriptionOnFocus(event){
-    this.setState({expandedDesc : true});
+    this.setState({isExpandedDesc : true});
   }
   
   handleDescriptionCloseBtn(event){
     event.preventDefault();
-    this.setState({expandedDesc : false});
+    this.setState({isExpandedDesc : false});
   }
 
   render() {
     return (
-      <div class="form-abrir-chamado">
+      <div className="form-abrir-chamado">
         <form ref={el => (this.form = el)}>
           <label>Clientes</label>
-          <select name="clientName" 
-              value={this.state.chamado.clientName} 
-              onChange={this.handleClientNameOnChange}>
-            <option>Amontenegro</option>
-            <option>Bibi Barra</option>
-            <option>Bibi Campo Grande</option>
-            <option>Bibi Metro</option>
-            <option>Bibi Tijuca</option>
-            <option>Capi</option>
-            <option>Contarq</option>
-            <option>GlobalCafe</option>
-            <option>Lyon Construtora</option>
-            <option>MM</option>
-            <option>Mundo Verde</option>
-            <option>Pet Shop</option>
-            <option>Quality Fisio</option>
-            <option>Romarfel</option>
-            <option>UsaFlex</option>
-          </select>
+          <Select 
+              onChange={this.handleOnClientNameChange}
+              options = {clientsList}>
+          </Select>
 
           <label>Email</label>
-          <select name="mailTo"
-              value={this.state.chamado.mailTo} 
+          <Creatable
+            defaultValue={{ value: 'diegopereiracalcada@gmail.com', label: 'diegopereiracalcada@gmail.com' }}
+            onChange={this.handleOnMailToChange}
+            options={mailToOptions}
+            isMulti={true}
+          />
+          {/* <select name="mailTo"
+              value={this.state.mailTo} 
               onChange={this.handleMailToOnChange}>
             <option>tarapi007@gmail.com</option>
             <option>diegopereiracalcada@gmail.com</option>
-          </select>
+          </select> */}
 
           <label>Usuário:</label>
           <input name="openingUser" 
-              defaultValue={this.state.chamado.openingUser} 
+              defaultValue={this.state.openingUser} 
               onBlur={this.handleOpeningUserOnChange}/>
           
-          <div className={this.state.expandedDesc === true ? "desc-cont expanded-desc" : "desc-cont"}>
+          <div className={this.state.isExpandedDesc === true ? "desc-ctnr expanded-desc" : "desc-ctnr"}>
             <label>Descrição:</label>
             <button 
-                className={this.state.expandedDesc === true ? "btn-close-desc" : "btn-close-desc invisible"}
+                className={this.state.isExpandedDesc === true ? "btn-close-desc" : "btn-close-desc invisible"}
                 onClick={this.handleDescriptionCloseBtn}>
-            X
+              X
             </button>
             <TextareaAutosize 
                 name="description" 
                 style={{ minHeight: 100, maxHeight: 240 }}
-                defaultValue={this.state.chamado.description} 
+                defaultValue={this.state.description} 
                 onBlur={this.handleDescriptionOnChange}
                 onFocus={this.handleDescriptionOnFocus} /> 
           </div>
         </form>
-        <button class="btn-full50" onClick={() => this.send()}>Confirmar</button>
+        <button className="btn-confirmar btn-full50" onClick={() => this.send()}>Confirmar</button>
       </div>
     );
   }
@@ -452,7 +422,7 @@ class SimpleModal extends React.Component{
     showModal : this.props.showModal,
     osBeingClosed : this.props.osBeingClosed,
     isCloseBtnActive : true,
-    expandedDesc : false
+    isExpandedDesc : false
   }
 
   constructor(props){
@@ -504,12 +474,12 @@ class SimpleModal extends React.Component{
   }
 
   handleDescriptionOnFocus(event){
-    this.setState({expandedDesc : true});
+    this.setState({isExpandedDesc : true});
   }
   
   handleDescriptionCloseBtn(event){
     event.preventDefault();
-    this.setState({expandedDesc : false});
+    this.setState({isExpandedDesc : false});
   }
 
   render(){  
@@ -518,14 +488,14 @@ class SimpleModal extends React.Component{
       ?
       <div className="simple-modal-dimmed-bg">
         <div className="simple-modal-dialog">
-          <div class="simple-modal-header">
-            <div class="simple-modal-header-infs">
+          <div className="simple-modal-header">
+            <div className="simple-modal-header-infs">
               <p>Fechando OS  {this.state.osBeingClosed.osNumber}</p>
               <p>{this.state.osBeingClosed.description}</p>
             </div>
-            <div class="btn-area-close-modal">
+            <div className="btn-area-close-modal">
               <button 
-                  class="close-simple-modal"
+                  className="close-simple-modal"
                   onClick={() => {this.setState({showModal : false})}}>
                   X
               </button>
@@ -550,10 +520,10 @@ class SimpleModal extends React.Component{
                   this.setState({osBeingClosed : newOsBeingClosed });
                 }} type="text"/>
               
-              <div className={this.state.expandedDesc === true ? "desc-cont expanded-desc" : "desc-cont"}>
+              <div className={this.state.isExpandedDesc === true ? "desc-ctnr expanded-desc" : "desc-ctnr"}>
                 <label>Descrição:</label>
                 <button 
-                    className={this.state.expandedDesc === true ? "btn-close-desc" : "btn-close-desc invisible"}
+                    className={this.state.isExpandedDesc === true ? "btn-close-desc" : "btn-close-desc invisible"}
                     onClick={this.handleDescriptionCloseBtn}>
                   X
                 </button>
@@ -603,7 +573,7 @@ class ErrorLoadingOrders extends React.Component {
   }
 }
 
-export default App;
+export {App, Modulo};
 
 
 
