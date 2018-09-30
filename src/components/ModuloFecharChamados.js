@@ -28,7 +28,7 @@ class ModuloFecharChamados extends React.Component {
     }
   
     componentDidMount() {
-      console.log("[ModuloFecharChamados] - Carregando chamados do servidor: " + backEndHost);
+      console.log("[ModuloFecharChamados] - Montagem do componente invocada.");
       var myHeaders = new Headers({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -43,23 +43,29 @@ class ModuloFecharChamados extends React.Component {
                     cache: 'default' };
   
       var myRequest = new Request(`${backEndHost}/getOpeneds`, myInit);
-      console.log("[ModuloFecharChamados] - Disparando requisição: ", myRequest);
+      console.log(`[ModuloFecharChamados] - Disparando requisição para ${backEndHost}: `, myRequest);
   
       fetch(myRequest)
-      .then(function(response) {
-        return response.json();
-      }).then(function(json) {
-        console.log('[ModuloFecharChamados] - Json respondido:', json);
-        updateState({chamados : json});
-      }).catch((ex) => {
-        console.log('[ModuloFecharChamados] - Erro ao parsear. ', ex);
-        this.setState({isLoading : false, isInError : true});
-      });
-      
+          .then(function(response) {
+            console.log("[ModuloFecharChamados] - Recebido retorno da requisição.");
+            return response.json();
+          })
+          .then((json) => {
+            if(json.status != undefined && json.status == "-1"){
+              this.setState({isLoading : false, isInError : true});
+              return false;
+            }
+            console.log('[ModuloFecharChamados] - Json respondido:', json);
+            updateState({chamados : json});
+          })
+          .catch((ex) => {
+            console.log('[ModuloFecharChamados] - Erro ao parsear. ', ex);
+            this.setState({isLoading : false, isInError : true});
+          });
     }
   
     tryToCloseOs(chamado){
-      console.log("tryToCloseOs invoked");
+      console.log("[ModuloFecharChamados] - tryToCloseOs invoked");
       console.log(chamado);
       this.setState({
         showModal : true,
