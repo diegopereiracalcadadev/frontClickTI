@@ -1,9 +1,11 @@
 import React from 'react';
-import {backEndHost} from '../App';
-import LoadingGif from './LoadingGif';
 import ErrorLoadingOrders from './ErrorLoadingOrders';
-import SimpleModal from './SimpleModal';
 import ItemChamado from './ItemChamado';
+import LoadingGif from './LoadingGif';
+import SimpleModal from './SimpleModal';
+import {backEndHost} from '../App';
+import {sendGetRequest} from '../App';
+import {sendPostRequest} from '../App';
 
 function updateState(toUpdateObject){
     this.setState({ chamados : toUpdateObject.chamados, isLoading : false });
@@ -101,6 +103,5 @@ class ModuloFecharChamados extends React.Component {
       );
     }
   }
-
   
   export default ModuloFecharChamados;

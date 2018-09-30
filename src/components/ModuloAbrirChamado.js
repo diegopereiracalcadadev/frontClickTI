@@ -2,6 +2,9 @@ import React from 'react';
 import Select from 'react-select';
 import Creatable from 'react-select/lib/Creatable';
 import TextareaAutosize from 'react-autosize-textarea';
+import {backEndHost} from '../App';
+import {sendGetRequest} from '../App';
+import {sendPostRequest} from '../App';
 
 const mailToOptions = [
   { value: 'diegopereiracalcada@gmail.com', label: 'diegopereiracalcada@gmail.com' },
@@ -29,13 +32,12 @@ const clientsList = [
 class ModuloAbrirChamado extends React.Component{
     state = {
       clientName : "",
-      mailTo : "diegopereiracalcada@gmail.com",
+      mailTo : [{value: "diegopereiracalcada@gmail.com", label: "diegopereiracalcada@gmail.com"}],
       openingUser : "",
       description : "",
       isExpandedDesc : false,
     }
     
-  
     constructor(props){
       super(props);
       this.handleOpeningUserOnChange = this.handleOpeningUserOnChange.bind(this);
@@ -47,26 +49,29 @@ class ModuloAbrirChamado extends React.Component{
   
     send() {
       console.log(this.state);
-      // if(!this.state.clientName 
-      //       || !this.state.description
-      //       || !this.state.mailTo  
-      //       || !this.state.openingUser
-      //       || this.state.clientName.trim() === ""
-      //       || this.state.description.trim() === "" 
-      //       || this.state.mailTo.trim() === "" 
-      //       || this.state.openingUser.trim() === ""){
-      //   alert("Preencha todos os campos por favor");
-      //   return false;
-      // }
-      // sendPostRequest(
-      //   `${backEndHost}/open`, 
-      //   this.state,
-      //   (corpo) => {
-      //     console.log(corpo);
-      //     alert(corpo.message);
-      //     window.location.reload();
-      //   }
-      // );
+      // validadeFields(); // TODO: funcao universal de vald
+      if(this.state.clientName == ""
+          || this.state.mailTo == ""
+          || this.state.openingUser == ""
+          || this.state.description == ""
+          || this.state.clientName.value.trim() === ""
+          || this.state.mailTo[0].value.trim() === "" 
+          || this.state.description.trim() === "" 
+          || this.state.openingUser.trim() === ""){
+        console.log("Campos obrigatórios vazios. Confirmação de abertura cancelada.");
+        alert("Preencha todos os campos por favor");
+        return false;
+      } else {
+        sendPostRequest(
+          `${backEndHost}/open`, 
+          this.state,
+          (corpo) => {
+            console.log(corpo);
+            alert(corpo.message);
+            window.location.reload();
+          }
+        );
+      }
     }
   
     handleOnClientNameChange = (selectedOption) => {
@@ -115,12 +120,6 @@ class ModuloAbrirChamado extends React.Component{
               options={mailToOptions}
               isMulti={true}
             />
-            {/* <select name="mailTo"
-                value={this.state.mailTo} 
-                onChange={this.handleMailToOnChange}>
-              <option>tarapi007@gmail.com</option>
-              <option>diegopereiracalcada@gmail.com</option>
-            </select> */}
   
             <label>Usuário:</label>
             <input name="openingUser" 
@@ -131,9 +130,7 @@ class ModuloAbrirChamado extends React.Component{
               <label>Descrição:</label>
               <button 
                   className={this.state.isExpandedDesc === true ? "btn-close-desc" : "btn-close-desc invisible"}
-                  onClick={this.handleDescriptionCloseBtn}>
-                X
-              </button>
+                  onClick={this.handleDescriptionCloseBtn}>X</button>
               <TextareaAutosize 
                   name="description" 
                   style={{ minHeight: 100, maxHeight: 240 }}

@@ -39,7 +39,6 @@ var sendJsonRequest = async (url, metodo, objeto, callback) => {
     alert(error);
   }
 }
-
 var sendGetRequest = (url, callback) => {
   console.log("Method sendGetRequest was invoked.", url);
   return sendJsonRequest(url, "GET", callback);
@@ -53,7 +52,7 @@ var sendPostRequest = (url, objeto, callback) => {
 
 class App extends React.Component {
   state = {
-    activeModule : Modulo.CLOSEOS
+    activeModule : Modulo.OPENOS
   }
   
   constructor(props){
@@ -73,9 +72,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header activeModule={this.state.activeModule} changeAppActiveModule = {this.changeAppActiveModule} />
+        <Header activeModule={this.state.activeModule} 
+            changeAppActiveModule = {this.changeAppActiveModule}/>
         <Body activeModule={this.state.activeModule} />
-        <Footer />
       </div>
     );
   }
@@ -86,7 +85,9 @@ export {
     Modulo, 
     ModuloAbrirChamado, 
     ModuloFecharChamados,
-    backEndHost
+    backEndHost,
+    sendGetRequest,
+    sendPostRequest
 };
 
 
