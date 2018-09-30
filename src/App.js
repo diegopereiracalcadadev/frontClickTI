@@ -26,8 +26,8 @@ var sendJsonRequest = async (url, metodo, objeto, callback) => {
           body: JSON.stringify(objeto)
         });
     const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-    if(body.returnCode == -1){
+    if (200 !== response.status) throw Error(body.message);
+    if(-1 == body.returnCode){
       alert("Erro:" + body.message);
       console.log(body.message);
     }
@@ -53,7 +53,7 @@ var sendPostRequest = (url, objeto, callback) => {
 
 class App extends React.Component {
   state = {
-    activeModule : Modulo.OPENOS
+    activeModule : Modulo.CLOSEOS
   }
   
   constructor(props){

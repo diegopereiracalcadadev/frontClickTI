@@ -52,8 +52,9 @@ class ModuloFecharChamados extends React.Component {
           })
           .then((json) => {
             if(json.status != undefined && json.status == "-1"){
-              this.setState({isLoading : false, isInError : true});
-              return false;
+              // this.setState({isLoading : false, isInError : true});
+              // return false;
+              throw new Error("teste de rror");
             }
             console.log('[ModuloFecharChamados] - Json respondido:', json);
             updateState({chamados : json});
