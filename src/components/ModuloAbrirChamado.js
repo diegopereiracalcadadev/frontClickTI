@@ -32,7 +32,7 @@ const clientsList = [
 class ModuloAbrirChamado extends React.Component{
     state = {
       clientName : "",
-      mailTo : [{value: "diegopereiracalcada@gmail.com", label: "diegopereiracalcada@gmail.com"}],
+      mailTo : [],
       openingUser : "",
       description : "",
       isExpandedDesc : false,
@@ -50,14 +50,10 @@ class ModuloAbrirChamado extends React.Component{
     send() {
       console.log(this.state);
       // validadeFields(); // TODO: funcao universal de vald
-      if(this.state.clientName == ""
-          || this.state.mailTo == ""
-          || this.state.openingUser == ""
-          || this.state.description == ""
-          || this.state.clientName.value.trim() === ""
-          || this.state.mailTo[0].value.trim() === "" 
-          || this.state.description.trim() === "" 
-          || this.state.openingUser.trim() === ""){
+      if ( this.state.clientName == "" || this.state.clientName.value.trim() === ""
+          || this.state.mailTo == "" || this.state.mailTo[0].value.trim() === "" 
+          || this.state.openingUser == "" || this.state.openingUser.trim() === ""
+          || this.state.description == "" || this.state.description.trim() === "" ){
         console.log("Campos obrigatórios vazios. Confirmação de abertura cancelada.");
         alert("Preencha todos os campos por favor");
         return false;
@@ -75,25 +71,33 @@ class ModuloAbrirChamado extends React.Component{
     }
   
     handleOnClientNameChange = (selectedOption) => {
-      this.setState({ clientName : selectedOption });
-      console.log("[ModuloAbrirChamado] - handleOnClientNameChange - State após execução ", this.state);
+      this.setState(
+        { clientName : selectedOption }, 
+        ()=>{console.log("[ModuloAbrirChamado] - handleOnClientNameChange - State após execução", this.state);}
+      );
     }
     
     handleOnMailToChange = (selectedOption) => {
-      this.setState({ mailTo : selectedOption });
-      console.log("[ModuloAbrirChamado] - handleOnMailToChange - State após execução", this.state);
+      this.setState(
+          { mailTo : selectedOption }, 
+          ()=>{console.log("[ModuloAbrirChamado] - handleOnMailToChange - State após execução", this.state);}
+      );
     }
   
-    handleOpeningUserOnChange(event){
-      this.setState({openingUser : event.target.value});
-      console.log("[ModuloAbrirChamado] - handleOpeningUserOnChange - State após execução", this.state);
+    handleOpeningUserOnChange = (event) => {
+      this.setState(
+          { openingUser : event.target.value }, 
+          ()=>{console.log("[ModuloAbrirChamado] - handleOpeningUserOnChange - State após execução", this.state);}
+      );
     }
   
-    handleDescriptionOnChange(event){
-      this.setState({description : event.target.value});
-      console.log("[ModuloAbrirChamado] - handleDescriptionOnChange - State após execução", this.state);
+    handleDescriptionOnChange = (event) => {
+      this.setState(
+          { description : event.target.value },
+          ()=>{console.log("[ModuloAbrirChamado] - handleDescriptionOnChange - State após execução", this.state);}
+      );
     }
-  
+    
     handleDescriptionOnFocus(event){
       this.setState({isExpandedDesc : true});
     }
@@ -109,13 +113,14 @@ class ModuloAbrirChamado extends React.Component{
           <form ref={el => (this.form = el)}>
             <label>Clientes</label>
             <Select 
-                onChange={this.handleOnClientNameChange}
+                defaultValue = {this.state.clientName} 
+                onChange = {this.handleOnClientNameChange}
                 options = {clientsList}>
             </Select>
   
             <label>Email</label>
             <Creatable
-              defaultValue={{ value: 'diegopereiracalcada@gmail.com', label: 'diegopereiracalcada@gmail.com' }}
+              defaultValue={this.state.mailTo} 
               onChange={this.handleOnMailToChange}
               options={mailToOptions}
               isMulti={true}

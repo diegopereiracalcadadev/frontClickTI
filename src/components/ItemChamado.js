@@ -39,7 +39,7 @@ class ItemChamado extends React.Component {
             <div className="infs-chamado">
               <input type="hidden" name="clientId" value={this.state.clientId} />
               <p className="os-number">OS-{this.state.osNumber}</p>
-              <p className="nome-cliente">{this.state.clientName}</p>
+              <p className="nome-cliente">{this.state.clientName.label}</p>
               <p className="desc-chamado">{this.state.description}</p>
             </div>
             <div className="status-chamado">

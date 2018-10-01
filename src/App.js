@@ -52,7 +52,7 @@ var sendPostRequest = (url, objeto, callback) => {
 
 class App extends React.Component {
   state = {
-    activeModule : Modulo.OPENOS
+    activeModule : Modulo.CLOSEOS
   }
   
   constructor(props){
