@@ -26,7 +26,7 @@ class SelectNomeEmpresa extends React.Component{
                 <label>Clientes</label>
                 <Select 
                     defaultValue = {this.props.defaultValue} //{this.state.clientName} 
-                    onChange = {this.props.onChange} //{this.handleOnClientNameChange}
+                    onChange = {this.props.handleOnChange} //{this.handleOnClientNameChange}
                     options = {companyNameList}>
                 </Select>
             </div>
