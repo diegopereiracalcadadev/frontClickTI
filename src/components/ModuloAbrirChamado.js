@@ -1,33 +1,17 @@
 import React from 'react';
-import Select from 'react-select';
 import Creatable from 'react-select/lib/Creatable';
 import TextareaAutosize from 'react-autosize-textarea';
 import {backEndHost} from '../App';
 import {sendGetRequest} from '../App';
 import {sendPostRequest} from '../App';
+import SelectNomeEmpresa from './inputs/SelectNomeEmpresa';
 
 const mailToOptions = [
   { value: 'diegopereiracalcada@gmail.com', label: 'diegopereiracalcada@gmail.com' },
   { value: 'tarapi007@gmail.com', label: 'tarapi007@gmail.com' }
 ];
 
-const clientsList = [
-  { value: 'amontenegro', label : 'Amontenegro'},
-  { value: 'bibi Barra', label : 'Bibi Barra'},
-  { value: 'bibi Campo Grande', label : 'Bibi Campo Grande'},
-  { value: 'bibi Metro', label : 'Bibi Metro'},
-  { value: 'bibi Tijuca', label : 'Bibi Tijuca'},
-  { value: 'capi', label : 'Capi'},
-  { value: 'contarq', label : 'Contarq'},
-  { value: 'globalCafe', label : 'GlobalCafe'},
-  { value: 'lyon Construtora', label : 'Lyon Construtora'},
-  { value: 'mm', label : 'MM'},
-  { value: 'mundo Verde', label : 'Mundo Verde'},
-  { value: 'pet Shop', label : 'Pet Shop'},
-  { value: 'quality Fisio', label : 'Quality Fisio'},
-  { value: 'romarfel', label : 'Romarfel'},
-  { value: 'usaFlex', label : 'UsaFlex'}
-];
+
 
 class ModuloAbrirChamado extends React.Component{
     state = {
@@ -111,12 +95,9 @@ class ModuloAbrirChamado extends React.Component{
       return (
         <div className="form-abrir-chamado">
           <form ref={el => (this.form = el)}>
-            <label>Clientes</label>
-            <Select 
-                defaultValue = {this.state.clientName} 
-                onChange = {this.handleOnClientNameChange}
-                options = {clientsList}>
-            </Select>
+            <SelectNomeEmpresa 
+                onChange={this.handleOnClientNameChange}
+                defaultValue={this.state.clientName} />
   
             <label>Email</label>
             <Creatable
