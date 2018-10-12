@@ -11,7 +11,7 @@ var Modulo = {
   CLOSEOS : { key : "closeos",title : "Fechar Chamados"}
 };
 
-var backEndHost = "http://192.168.0.12:8080";//"http://nodejs-mongo-persistent-backendclick.193b.starter-ca-central-1.openshiftapps.com";
+var backEndHost = "http://nodejs-mongo-persistent-backendclick.193b.starter-ca-central-1.openshiftapps.com";
 
 
 var sendJsonRequest = async (url, metodo, objeto, callback) => {

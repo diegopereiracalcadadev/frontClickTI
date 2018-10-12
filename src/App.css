@@ -42,7 +42,7 @@
 }
 
 
-.input-select > div > div{
+.input-select > div > div:first-child{
   height: 45px
 }
 
