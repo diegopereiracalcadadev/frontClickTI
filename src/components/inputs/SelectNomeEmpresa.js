@@ -22,7 +22,7 @@ const companyNameList = [
 class SelectNomeEmpresa extends React.Component{
     render(){
         return(
-            <div>
+            <div class="input-select">
                 <label>Clientes</label>
                 <Select 
                     defaultValue = {this.props.defaultValue} //{this.state.clientName} 

@@ -41,6 +41,11 @@
   background: #145292;
 }
 
+
+.input-select > div > div{
+  height: 45px
+}
+
 /*----------------FIM COMMONS -----------------*/
 
 /* -------------------------------------------------*/
@@ -398,8 +403,13 @@ section.body-componente {
   margin-top: 5px;
   font-size: 29px;
   border: none;
-  background: white;
+  background: #ececec;
   color: #8e8b8b;
+  padding-bottom: 6px;
+  width: 40px;
+  padding-top: 2px;
+  box-shadow: 2px 2px #5250504f;
+  cursor: pointer;
 }
 
 .expanded-desc textarea {

@@ -10,7 +10,7 @@ class CreatableMailTo extends React.Component{
 
     render(){
       return (
-        <div>
+        <div class="input-creatable">
           <label>Email</label>
           <Creatable
             defaultValue={this.props.defaultValue} 
