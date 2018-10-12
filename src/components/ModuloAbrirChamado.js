@@ -63,9 +63,9 @@ class ModuloAbrirChamado extends React.Component{
       this.setState(
           { mailTo : selectedOption }, 
           ()=>{console.log("[ModuloAbrirChamado] - handleOnMailToChange - State após execução", this.state);}
-        );
+      );
         
-      }
+    }
   
       handleOpeningUserOnChange = (event) => {
         console.log(`[ handleOpeningUserOnChange ] invoked. `);
@@ -107,7 +107,7 @@ class ModuloAbrirChamado extends React.Component{
               defaultValue={this.state.clientName} />
   
             <InputOpeningUser 
-                openingUser={this.state.openingUser} 
+                defaultValue={this.state.openingUser} 
                 handleOnChange={this.handleOpeningUserOnChange} />
             
             <div className={this.state.isExpandedDesc === true ? "desc-ctnr expanded-desc" : "desc-ctnr"}>

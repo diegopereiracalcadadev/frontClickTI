@@ -17,14 +17,17 @@ var backEndHost = "http://192.168.0.12:8080";//"http://nodejs-mongo-persistent-b
 var sendJsonRequest = async (url, metodo, objeto, callback) => {
   console.log("Enviando solicitação");
   try {
-    const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(objeto)
-        });
+    const response = await fetch(
+          url, 
+          {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(objeto)
+          }
+    );
     const body = await response.json();
     if (200 !== response.status) throw Error(body.message);
     if(-1 == body.returnCode){
