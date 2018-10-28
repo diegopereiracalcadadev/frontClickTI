@@ -67,31 +67,31 @@ class ModuloAbrirChamado extends React.Component{
         
     }
   
-      handleOpeningUserOnChange = (event) => {
-        console.log(`[ handleOpeningUserOnChange ] invoked. `);
-        this.setState(
-          { openingUser : event.target.value }, 
-          ()=>{console.log("[ModuloAbrirChamado] - handleOpeningUserOnChange - State após execução", this.state);}
-        );
-      }
-  
-      handleDescriptionOnChange = (event) => {
-        console.log(`[ handleDescriptionOnChange ] invoked. `);
-        this.setState(
-          { description : event.target.value },
-          ()=>{console.log("[ModuloAbrirChamado] - handleDescriptionOnChange - State após execução", this.state);}
-        );
-      }
-      
-      handleDescriptionOnFocus(event){
-        console.log(`[ handleDescriptionOnFocus ] invoked. `);
-        this.setState({isExpandedDesc : true});
-      }
-      
-      handleDescriptionCloseBtn(event){
-        console.log(`[ handleDescriptionCloseBtn ] invoked. `);
-        event.preventDefault();
-        this.setState({isExpandedDesc : false});
+    handleOpeningUserOnChange = (event) => {
+      console.log(`[ handleOpeningUserOnChange ] invoked. `);
+      this.setState(
+        { openingUser : event.target.value }, 
+        ()=>{console.log("[ModuloAbrirChamado] - handleOpeningUserOnChange - State após execução", this.state);}
+      );
+    }
+
+    handleDescriptionOnChange = (event) => {
+      console.log(`[ handleDescriptionOnChange ] invoked. `);
+      this.setState(
+        { description : event.target.value },
+        ()=>{console.log("[ModuloAbrirChamado] - handleDescriptionOnChange - State após execução", this.state);}
+      );
+    }
+    
+    handleDescriptionOnFocus(event){
+      console.log(`[ handleDescriptionOnFocus ] invoked. `);
+      this.setState({isExpandedDesc : true});
+    }
+    
+    handleDescriptionCloseBtn(event){
+      console.log(`[ handleDescriptionCloseBtn ] invoked. `);
+      event.preventDefault();
+      this.setState({isExpandedDesc : false});
     }
   
     render() {

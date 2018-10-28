@@ -8,7 +8,8 @@ import ModuloFecharChamados from './components/ModuloFecharChamados';
  
 var Modulo = {
   OPENOS : { key : "openos",title : "Abrir Chamado"},
-  CLOSEOS : { key : "closeos",title : "Fechar Chamados"}
+  CLOSEOS : { key : "closeos",title : "Fechar Chamados"},
+  LIST : { key : "list",title : "Chamados do mês"}
 };
 
 var backEndHost = "http://nodejs-mongo-persistent-backendclick.193b.starter-ca-central-1.openshiftapps.com";

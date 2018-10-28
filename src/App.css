@@ -448,3 +448,87 @@ section.body-componente {
 
 /* ---------- FIM MÓDULO ABRIR CHAMADO ----------------*/
 
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+/* ------------- LISTAGEM GRÁFICA ----------------*/
+/* -------------------------------------------------*/
+/* -------------------------------------------------*/
+
+table.tabela-chamados {
+  width: 100%;
+  min-height: 200px;
+}
+
+table.tabela-chamados td{
+  vertical-align: top !important;
+}
+
+
+thead.headers-chamados th {
+  width: calc(100%/31);
+  background: black;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+.celula-chamado{
+  vertical-align: top;
+}
+
+.card {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 6px;
+  margin-bottom: 3px;
+}
+
+.card .card-content {
+  border-radius: 0 0 2px 2px;
+  box-sizing: border-box;
+  padding: 0 !important;
+}
+
+.card-title{
+  text-align: center;
+  font-weight: 600;
+}
+
+.card-title p{
+  margin-top: 0px;
+  word-break: break-word;
+}
+
+.card .card-content p {
+  margin: 0;
+  color: inherit;
+}
+
+.tema2.card-title{
+  background: red;
+  color: white;
+  margin-left: -6px;
+  margin-right: -6px;
+  margin-top: -6px;
+  height: 24px;
+  padding-top: 3px;
+} 
+
+
+.cor1{ background-color: #ffaeae; }
+.cor2{ background-color: #ffdbae; }
+.cor3{ background-color: #ebffae; }
+.cor4{ background-color: #ffaeae; }
+.cor5{ background-color: #ffaeae; }
+.cor6{ background-color: #ffaeae; }
+.cor7{ background-color: #ffaeae; }
+.cor8{ background-color: #ffaeae; }
+.cor9{ background-color: #ffaeae; }
+.cor10{ background-color: #ffaeae; }
+.cor11{ background-color: #ffaeae; }
+.cor12{ background-color: #ffaeae; }
+
+
+
+/* ---------- FIM LISTAGEM GRÁFICA ----------------*/
