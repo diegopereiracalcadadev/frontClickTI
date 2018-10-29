@@ -1,4 +1,7 @@
 import React from 'react';
+import {sendGetRequest} from '../App';
+import {sendPostRequest} from '../App';
+import {backEndHost} from '../App';
 
 function fazParte(date, tdDay){
     tdDay = "" + tdDay;
@@ -6,7 +9,7 @@ function fazParte(date, tdDay){
         tdDay = "0" + tdDay;
     }
     console.log("faz parte invoked");
-    if(date.indexOf(tdDay) === 0){
+    if(date.indexOf(tdDay) === 8){
         return true;
     } else {
         return false;
@@ -16,54 +19,53 @@ function fazParte(date, tdDay){
 class Card extends React.Component{
     render(){
         return (
-            <div className={"card " + this.props.clientName} >
+            <div className={"card " + this.props.clientName.value} >
                 <div className="card-title">
-                    <p>{this.props.clientName}</p>
+                    <p>{this.props.clientName.label}</p>
                 </div>
                 <div className="card-content">
-                    <p>{this.props.desc}</p>
+                    <p>{this.props.description}</p>
                 </div>
             </div>
         );
     }
 }
 
-class TRQuinzena1 extends React.Component{
+class TRQuinzena extends React.Component{
     state = {
-        chamadosList : [
-            {
-                clientName: "MM",
-                desc : "Cards for display in portfolio style material design by Google.",
-                date : "01/10/218"
-            },
-            {
-                clientName: "clientNameTest2",
-                desc : "Second big description lorem i´sum.",
-                date : "01/10/218"
-            },
-            {
-                clientName: "clientNameTest2",
-                desc : "hamachi ferrado",
-                date : "02/10/218"
-            },
-            {
-                clientName: "clientNameTest3",
-                desc : "hamachi ferrado",
-                date : "03/10/218"
+        chamadosList : []
+    }
+
+    componentDidMount(){
+        sendGetRequest(
+            `${backEndHost}/getCloseds`, 
+            (corpo) => {
+              console.log("[TRQuinzena] - Post retornado com sucesso", corpo);  
+              this.setState({chamadosList : corpo});
             }
-        ]
+          );
     }
 
     render(){
+        let firstDay;
+        let lastDay;
+
+        if(this.props.quinzena === "1"){
+            firstDay = 1;
+            lastDay = 15;
+        } else {
+            firstDay = 16;
+            lastDay = 31;
+        }
+
         let tds = [];
-        for(let i = 1; i <= 15; i++){
+        for(let i = firstDay; i <= lastDay; i++){
             tds.push(
-                <td  >
-                    {i}
+                <td chave={i}>
                     {this.state.chamadosList.map((item) => {
-                        if(fazParte(item.date, i)){
+                        if(fazParte(item.closingDate, i)){
                             return <Card clientName={item.clientName} 
-                                        desc={item.desc} />
+                                        description={item.description} />
                         } else {
                             return null;
                         }
@@ -79,24 +81,35 @@ class TRQuinzena1 extends React.Component{
     }
 }
 
-class TableQuinzena1 extends React.Component{
+class TableQuinzena extends React.Component{
    
     render(){
+        let firstDay;
+        let lastDay;
+        
+        if(this.props.quinzena === "1"){
+            firstDay = 1;
+            lastDay = 15;
+        } else {
+            firstDay = 16;
+            lastDay = 31;
+        }
+
         let cabecalhos = [];
-        for(let i=1; i<=15; i++){
-           cabecalhos.push( <th key={i} >{i}</th>);
+        for(let i = firstDay; i <= lastDay; i++){
+           cabecalhos.push( <th key={i} chave={i}>{i}</th>);
         }
       
         return (
             <div>
-                 <table className="tabela-chamados quinzena-1">
+                 <table className="tabela-chamados">
                     <thead className="headers-chamados">
                         <tr>
                             { cabecalhos }
                         </tr>
                     </thead>
                     <tbody>
-                           <TRQuinzena1 />
+                           <TRQuinzena quinzena={this.props.quinzena} />
                     </tbody>
                 </table>
             </div>
@@ -110,7 +123,8 @@ class ModuloListagemMensal extends React.Component{
         
         return(
             <div>
-               <TableQuinzena1 />
+                <TableQuinzena quinzena="1" />
+                <TableQuinzena quinzena="2"  />
             </div>
         )
     }

@@ -15,13 +15,13 @@ var Modulo = {
 var backEndHost = "http://nodejs-mongo-persistent-backendclick.193b.starter-ca-central-1.openshiftapps.com";
 
 
-var sendJsonRequest = async (url, metodo, objeto, callback) => {
+var sendJsonRequest = async (url, metodo, callback, objeto) => {
   console.log("Enviando solicitação");
   try {
     const response = await fetch(
           url, 
           {
-            method: 'POST',
+            method: metodo,
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
@@ -44,14 +44,14 @@ var sendJsonRequest = async (url, metodo, objeto, callback) => {
   }
 }
 var sendGetRequest = (url, callback) => {
-  console.log("Method sendGetRequest was invoked.", url);
+  console.log("[APP] - sendGetRequest method  was invoked.", url);
   return sendJsonRequest(url, "GET", callback);
 }
 
 var sendPostRequest = (url, objeto, callback) => {
-  console.log("Method sendPostRequest was invoked.");
+  console.log("[APP] - sendPostRequest method  was invoked.");
   console.log(url, objeto);
-  return sendJsonRequest(url, "POST", objeto, callback);
+  return sendJsonRequest(url, "POST", callback, objeto);
 }
 
 class App extends React.Component {

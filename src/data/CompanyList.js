@@ -3,7 +3,7 @@ const COMPANYLIST = [
     { value: 'bibibarra', label : 'Bibi Barra'},
     { value: 'bibicampogrande', label : 'Bibi Campo Grande'},
     { value: 'bibimetro', label : 'Bibi Metro'},
-    { value: 'bibtijuca', label : 'Bibi Tijuca'},
+    { value: 'bibitijuca', label : 'Bibi Tijuca'},
     { value: 'capi', label : 'Capi'},
     { value: 'contarq', label : 'Contarq'},
     { value: 'globalCafe', label : 'GlobalCafe'},

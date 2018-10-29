@@ -461,6 +461,7 @@ table.tabela-chamados {
 
 table.tabela-chamados td{
   vertical-align: top !important;
+  padding: 0 !important;
 }
 
 
@@ -470,6 +471,7 @@ thead.headers-chamados th {
   color: white;
   font-weight: 600;
   text-align: center;
+  padding: 0 !important;
 }
 
 .celula-chamado{
@@ -498,6 +500,8 @@ thead.headers-chamados th {
 .card-title p{
   margin-top: 0px;
   word-break: break-word;
+  font-size: 12px;
+  margin-bottom: 2px;
 }
 
 .card .card-content p {
@@ -515,20 +519,49 @@ thead.headers-chamados th {
   padding-top: 3px;
 } 
 
+.card.amontenegro {
+  background-color: #792EA5;
+}
 
-.cor1{ background-color: #ffaeae; }
-.cor2{ background-color: #ffdbae; }
-.cor3{ background-color: #ebffae; }
-.cor4{ background-color: #ffaeae; }
-.cor5{ background-color: #ffaeae; }
-.cor6{ background-color: #ffaeae; }
-.cor7{ background-color: #ffaeae; }
-.cor8{ background-color: #ffaeae; }
-.cor9{ background-color: #ffaeae; }
-.cor10{ background-color: #ffaeae; }
-.cor11{ background-color: #ffaeae; }
-.cor12{ background-color: #ffaeae; }
+.card.bibibarra, .card.bibicampogrande, .card.bibimetro, .card.bibitijuca {
+  background-color: #304050;
+  color: white;
+}
 
+.card.capi {
+  background-color: #AAB6D4;
+}
 
+.card.contarq {
+  background-color: #E79FAD;
+}
+
+.card.globalcafe {
+  background-color: #004A04;
+}
+
+.card.lyon {
+  background-color: #01ADFB;
+}
+
+.card.mundoverde {
+  background-color: #AAB6D4;
+}
+
+.card.petshop {
+  background-color: #B01297;
+}
+
+.card.qualityfisio {
+  background-color: #B01297;
+}
+
+.card.romarfel {
+  background-color: #BC9300;
+}
+
+.card.usaflex {
+  background-color: #164E73;
+}
 
 /* ---------- FIM LISTAGEM GRÁFICA ----------------*/
